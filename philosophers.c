@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 11:12:52 by ozini             #+#    #+#             */
-/*   Updated: 2024/05/28 15:56:26 by ozini            ###   ########.fr       */
+/*   Updated: 2024/05/28 17:49:56 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,16 @@
 int mails = 0;
 int lock = 0;
 pthread_mutex_t mutex;
+
+typedef struct prompt_data_s
+{
+    int philo_nbr;
+    int time_to_die;
+    int time_to_eat;
+    int time_to_sleep;
+    int nbr_of_meals;
+    long    initial_time;
+}   prompt_data_t;
 
 long    get_absolute_microseconds()
 {
@@ -46,27 +56,27 @@ void*   routine_w_struct(void *arg)
     //eating.
     usleep(prompt->time_to_eat);
     pthread_mutex_unlock(&mutex);
-    printf("El tiempo transcurrido comiendo es %ld\n", get_relative_microseconds(initial_time));
+    printf("El tiempo transcurrido comiendo es %ld\n", get_relative_microseconds(prompt->initial_time));
     //sleeping
     usleep(200);
-    printf("El tiempo transcurrido durmiendo es %ld\n", get_relative_microseconds(initial_time));
-    return (NULL);    
+    printf("El tiempo transcurrido durmiendo es %ld\n", get_relative_microseconds(prompt->initial_time));
+    return (NULL);  
 }
 
-void*   full_routine(void *arg)
+void*	full_routine(void *arg)
 {
-    long    initial_time;
+	long	initial_time;
 
-    initial_time = *(long *)arg;
-    pthread_mutex_lock(&mutex);
-    //eating.
-    usleep(800);
-    pthread_mutex_unlock(&mutex);
-    printf("El tiempo transcurrido comiendo es %ld\n", get_relative_microseconds(initial_time));
-    //sleeping
-    usleep(200);
-    printf("El tiempo transcurrido durmiendo es %ld\n", get_relative_microseconds(initial_time));
-    return (NULL);    
+	initial_time = *(long *)arg;
+	pthread_mutex_lock(&mutex);
+	//eating.
+	usleep(800);
+	pthread_mutex_unlock(&mutex);
+	printf("El tiempo transcurrido comiendo es %ld\n", get_relative_microseconds(initial_time));
+	//sleeping
+	usleep(200);
+	printf("El tiempo transcurrido durmiendo es %ld\n", get_relative_microseconds(initial_time));
+	return (NULL);  
 }
 void*   routine()
 {
@@ -82,15 +92,6 @@ void*   routine()
     }
     return (NULL);
 }
-typedef struct prompt_data_s
-{
-    int philo_nbr;
-    int time_to_die;
-    int time_to_eat;
-    int time_to_sleep;
-    int nbr_of_meals;
-}   prompt_data_t;
-
 int ft_atoi(char *str)
 {
     long number;
@@ -144,10 +145,11 @@ prompt_data_t *init_prompt(int argc, char **argv)
             prompt->time_to_sleep = ft_atoi(argv[4]);
         i++;
     }
+	prompt->initial_time = get_absolute_microseconds();
     if(i == 6)
-        prompt->nbr_of_meals = ft_atoi(argv[5]);
+    	prompt->nbr_of_meals = ft_atoi(argv[5]);
     else
-        prompt->nbr_of_meals = 0;
+    	prompt->nbr_of_meals = 0;
     return (prompt);
     
 }
@@ -176,8 +178,7 @@ pthread_t    *initiliaze_philosophers(int philo_nbr)
 int main(int argc, char **argv)
 {
     prompt_data_t   *prompt;
-    pthread_t       *th;   
-    long            initial_time;
+    pthread_t       *th;
     int             i;
 
     prompt = NULL;
@@ -193,14 +194,13 @@ int main(int argc, char **argv)
             printf("Failed to allocate memory\n");
             return 1;
         }
-        print_prompt_values(prompt);
-        initial_time = get_absolute_microseconds();
+/*         print_prompt_values(prompt);
         usleep(prompt->time_to_die);
-        printf("Time elapsed time_to_die: %ld\n", get_relative_microseconds(initial_time));
+        printf("Time elapsed time_to_die: %ld\n", get_relative_microseconds(prompt->initial_time));
         usleep(prompt->time_to_eat);
-        printf("Time elapsed time_to_eat: %ld\n", get_relative_microseconds(initial_time));
+        printf("Time elapsed time_to_eat: %ld\n", get_relative_microseconds(prompt->initial_time));
         usleep(prompt->time_to_sleep);
-        printf("Time elapsed time_to_sleep: %ld\n", get_relative_microseconds(initial_time));
+        printf("Time elapsed time_to_sleep: %ld\n", get_relative_microseconds(prompt->initial_time)); */
         th = initiliaze_philosophers(prompt->philo_nbr);
         pthread_mutex_init(&mutex, NULL);
         while(i < prompt->philo_nbr)
