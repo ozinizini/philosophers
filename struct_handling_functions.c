@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 10:46:18 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/01 14:14:37 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/01 14:31:36 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ static t_philosopher	*initiliaze_philosophers(int philo_nbr, t_meal *meal)
 	{
 		philosophers[i].philo_index = i + 1;
 		philosophers[i].eating_timestamp = 0;
+		philosophers[i].meals_eaten = 0;
 		philosophers[i].left_fork = meal->forks[i];
 		if (i == philo_nbr -1)
 			philosophers[i].right_fork = meal->forks[0];

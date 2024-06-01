@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 11:12:52 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/01 14:08:19 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/01 14:26:29 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 int mails = 0;
 int lock = 0;
 pthread_mutex_t mutex;
-
-
 
 void*	ultimate_routine(void *arg)
 {

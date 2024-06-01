@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 10:27:45 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/01 14:13:30 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/01 14:37:53 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,11 @@ struct	s_philosopher
 {
 	int				philo_index;
 	long			eating_timestamp;
+	int				meals_eaten;
 	pthread_t		philo;
 	pthread_mutex_t	right_fork;
 	pthread_mutex_t	left_fork;
+	pthread_mutex_t	print_mutex;
 	t_meal			*meal;
 };
 
