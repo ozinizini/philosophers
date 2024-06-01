@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 11:12:52 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/01 13:07:11 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/01 13:42:29 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 int mails = 0;
 int lock = 0;
 pthread_mutex_t mutex;
+
+
 
 void*	ultimate_routine(void *arg)
 {
@@ -25,6 +27,7 @@ void*	ultimate_routine(void *arg)
 	pthread_mutex_lock(&philo->right_fork);
 	pthread_mutex_lock(&philo->left_fork);
 	//eating
+	//Cuando el filósofo empieza a comer, su tiempo de vida se resetea
 	pthread_mutex_unlock(&philo->right_fork);
 	pthread_mutex_unlock(&philo->left_fork);
 	//sleeping

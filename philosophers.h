@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 10:27:45 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/01 13:05:54 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/01 13:24:36 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ typedef struct philosopher_s
 	t_meal			*meal;
 }	t_philosopher;
 
-long	get_absolute_microseconds(void);
-long	get_relative_microseconds(long initial_time);
+long	get_absolute_milliseconds(void);
+long	get_relative_milliseconds(long initial_time);
 int		ft_atoi(char *str);
 t_meal	*initialize_meal(int argc, char **argv);
 
