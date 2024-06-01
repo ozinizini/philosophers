@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 10:46:18 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/01 14:31:36 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/01 16:40:30 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static t_prompt_data	*init_prompt(int argc, char **argv)
 		printf("Failed to allocate memory for the data\n");
 		return (NULL);
 	}
+	prompt->nbr_of_meals = 0;
 	while (i < argc)
 	{
 		if (i == 1)
@@ -34,12 +35,10 @@ static t_prompt_data	*init_prompt(int argc, char **argv)
 			prompt->time_to_eat = ft_atoi(argv[3]);
 		if (i == 4)
 			prompt->time_to_sleep = ft_atoi(argv[4]);
+		if (i == 5)
+			prompt->nbr_of_meals = ft_atoi(argv[5]);
 		i++;
 	}
-	if (i == 6)
-		prompt->nbr_of_meals = ft_atoi(argv[5]);
-	else
-		prompt->nbr_of_meals = 0;
 	return (prompt);
 }
 

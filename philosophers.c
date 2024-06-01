@@ -6,15 +6,11 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 11:12:52 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/01 16:19:23 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/01 16:50:25 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-
-int mails = 0;
-int lock = 0;
-pthread_mutex_t mutex;
 
 void	*ultimate_routine(void *arg)
 {
@@ -34,6 +30,31 @@ void	*ultimate_routine(void *arg)
 	return (NULL);
 
 }
+
+void	destroy_mutexes(t_meal *meal)
+{
+	int	i;
+
+	i = 0;
+	while (i < meal->data->philo_nbr)
+	{
+		pthread_mutex_destroy(&meal->forks[i]);
+		i++;
+	}
+}
+
+
+void	init_mutexes(t_meal *meal)
+{
+	int	i;
+
+	i = 0;
+	while (i < meal->data->philo_nbr)
+	{
+		pthread_mutex_init(&meal->forks[i], NULL);
+		i++;
+	}
+}
 int main(int argc, char **argv)
 {
 	t_meal			*meal;
@@ -48,7 +69,8 @@ int main(int argc, char **argv)
 		meal = initialize_meal(argc, argv);
 		if (meal == NULL)
 			return (1);
-		pthread_mutex_init(&mutex, NULL);
+		meal->initial_time = get_absolute_milliseconds();
+		init_mutexes(meal);
 		while (i < meal->data->philo_nbr)
 		{
 			pthread_create(&meal->philosophers[i].philo, NULL,
@@ -61,8 +83,8 @@ int main(int argc, char **argv)
 			pthread_join(meal->philosophers[i].philo, NULL);
 			i++;
 		}
+		destroy_mutexes(meal);
 		//free the structs
-		pthread_mutex_destroy(&mutex);
 	}
 	else
 		printf("Incorrect number of arguments\n");
