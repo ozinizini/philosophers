@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 13:24:53 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/01 16:06:51 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/01 16:12:20 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,9 @@ void	philo_eating(t_philosopher *philo)
 		if (death_elapsed_time > philo->meal->data->time_to_die)
 		{
 			print_action(DIED, philo);
+			pthread_mutex_lock(&philo->meal->fin_meal_mut);
 			philo->meal->finished_meal = 1;
+			pthread_mutex_unlock(&philo->meal->fin_meal_mut);
 		}
 		if (philo->meal->finished_meal)
 			break ;
@@ -70,7 +72,9 @@ void	philo_sleeping(t_philosopher *philo)
 		if (death_elapsed_time > philo->meal->data->time_to_die)
 		{
 			print_action(DIED, philo);
+			pthread_mutex_lock(&philo->meal->fin_meal_mut);
 			philo->meal->finished_meal = 1;
+			pthread_mutex_unlock(&philo->meal->fin_meal_mut);
 		}
 		if (philo->meal->finished_meal)
 			break ;
