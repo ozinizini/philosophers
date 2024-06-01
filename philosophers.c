@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 11:12:52 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/01 14:26:29 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/01 15:34:50 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,37 +37,34 @@ void*	ultimate_routine(void *arg)
 }
 int main(int argc, char **argv)
 {
-    t_meal			*meal;
-    int             i;
+	t_meal			*meal;
+	int             i;
 
-    meal = NULL;
-    i = 0;
-    if(argc == 5 || argc == 6)
-    {
+	meal = NULL;
+	i = 0;
+	if (argc == 5 || argc == 6)
+	{
 		//Comprobar que los datos metidos son todos numéricos.
 		//Inicializar los datos (campo 'data' de 'meal')
-        meal = initialize_meal(argc, argv);
-        if(meal == NULL)
-        {
-            printf("Failed to allocate memory\n");
-            return 1;
-        }
-        pthread_mutex_init(&mutex, NULL);
-        while(i < meal->data->philo_nbr)
-        {
-            pthread_create(&meal->philosophers[i].philo, NULL, &ultimate_routine, &meal->philosophers[i]);
-            i++;
-        }
-        i = 0;
-        while(i < meal->data->philo_nbr)
-        {
-            pthread_join(meal->philosophers[i].philo, NULL);
-            i++;
-        }
-        //free the structs
-        pthread_mutex_destroy(&mutex);
-        //printf("The number of mails is: %d\n", mails);
-    }
-   else
-        printf("Incorrect number of arguments\n");
+		meal = initialize_meal(argc, argv);
+		if (meal == NULL)
+			return (1);
+		pthread_mutex_init(&mutex, NULL);
+		while (i < meal->data->philo_nbr)
+		{
+			pthread_create(&meal->philosophers[i].philo, NULL,
+				&ultimate_routine, &meal->philosophers[i]);
+			i++;
+		}
+		i = 0;
+		while (i < meal->data->philo_nbr)
+		{
+			pthread_join(meal->philosophers[i].philo, NULL);
+			i++;
+		}
+		//free the structs
+		pthread_mutex_destroy(&mutex);
+	}
+	else
+		printf("Incorrect number of arguments\n");
 }
