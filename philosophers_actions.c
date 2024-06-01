@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 13:24:53 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/01 13:41:39 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/01 14:09:53 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@ void	philo_eating(t_philosopher *philo)
 {
 	long	timestamp;
 
-	timestamp = get_relative_milliseconds(philo->meal->data->initial_time);
-	printf("%d %d is eating\n", timestamp, philo->philo_index);
+	timestamp = get_relative_milliseconds(philo->meal->initial_time);
+	printf("%ld %d is eating\n", timestamp, philo->philo_index);
 	while (timestamp < philo->meal->data->time_to_eat)
 	{
-		timestamp = get_relative_milliseconds(philo->meal->data->initial_time);
+		timestamp = get_relative_milliseconds(philo->meal->initial_time);
 	}
 }
 
@@ -28,11 +28,11 @@ void	philo_sleeping(t_philosopher *philo)
 {
 	long	timestamp;
 
-	timestamp = get_relative_milliseconds(philo->meal->data->initial_time);
-	printf("%d %d is sleeping\n", timestamp, philo->philo_index);
+	timestamp = get_relative_milliseconds(philo->meal->initial_time);
+	printf("%ld %d is sleeping\n", timestamp, philo->philo_index);
 	while (timestamp < philo->meal->data->time_to_sleep)
 	{
-		timestamp = get_relative_milliseconds(philo->meal->data->initial_time);
+		timestamp = get_relative_milliseconds(philo->meal->initial_time);
 	}
 }
 
@@ -40,7 +40,7 @@ void	philo_thinking(t_philosopher *philo)
 {
 	long	timestamp;
 
-	timestamp = get_relative_milliseconds(philo->meal->data->initial_time);
-	printf("%d %d is thinking\n", timestamp, philo->philo_index);
+	timestamp = get_relative_milliseconds(philo->meal->initial_time);
+	printf("%ld %d is thinking\n", timestamp, philo->philo_index);
 }
 

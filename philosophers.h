@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 10:27:45 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/01 13:24:36 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/01 14:13:30 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,25 +26,28 @@ typedef struct prompt_data_s
 	int		time_to_eat;
 	int		time_to_sleep;
 	int		nbr_of_meals;
-	long	initial_time;
 }	t_prompt_data;
+
+typedef struct	s_philosopher	t_philosopher;
 
 typedef struct meal_s
 {
 	t_prompt_data	*data;
 	t_philosopher	*philosophers;
 	pthread_mutex_t	*forks;
+	long			initial_time;
 	int				finished_meal;
 }	t_meal;
 
-typedef struct philosopher_s
+struct	s_philosopher
 {
 	int				philo_index;
+	long			eating_timestamp;
 	pthread_t		philo;
 	pthread_mutex_t	right_fork;
 	pthread_mutex_t	left_fork;
 	t_meal			*meal;
-}	t_philosopher;
+};
 
 long	get_absolute_milliseconds(void);
 long	get_relative_milliseconds(long initial_time);
