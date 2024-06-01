@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 11:12:52 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/01 10:48:09 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/01 13:07:11 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,24 @@
 int mails = 0;
 int lock = 0;
 pthread_mutex_t mutex;
+
+void*	ultimate_routine(void *arg)
+{
+	t_philosopher	*philo;
+
+	philo = (t_philosopher *)arg;
+
+	pthread_mutex_lock(&philo->right_fork);
+	pthread_mutex_lock(&philo->left_fork);
+	//eating
+	pthread_mutex_unlock(&philo->right_fork);
+	pthread_mutex_unlock(&philo->left_fork);
+	//sleeping
+	//thinking
+
+	
+}
+
 
 void*   routine_w_struct(void *arg)
 {
@@ -61,42 +79,6 @@ void*   routine()
     }
     return (NULL);
 }
-t_prompt_data *init_prompt(int argc, char **argv)
-{
-    t_prompt_data   *prompt;
-    int             i;
-    
-    i = 1;
-    //Aquí tendría que meter una función que comprobase que
-    //todos los valores son numéricos. Si alguna de ellos falla
-    //devuelvo NULL.
-    prompt = malloc(sizeof(t_prompt_data));
-    if(prompt == NULL)
-    {
-        //Aqui pongo un fd_putstr con el fd = 2
-        return(NULL);
-    }
-    while(i < argc)
-    {
-        if(i == 1)
-            prompt->philo_nbr = ft_atoi(argv[1]);
-        if(i == 2)
-            prompt->time_to_die = ft_atoi(argv[2]);
-        if(i == 3)
-            prompt->time_to_eat = ft_atoi(argv[3]);
-        if(i == 4)
-            prompt->time_to_sleep = ft_atoi(argv[4]);
-        i++;
-    }
-	prompt->initial_time = get_absolute_microseconds();
-    if(i == 6)
-    	prompt->nbr_of_meals = ft_atoi(argv[5]);
-    else
-    	prompt->nbr_of_meals = 0;
-    return (prompt);
-    
-}
-
 void print_prompt_values(t_prompt_data *prompt)
 {
     printf("El número de hilos es %d\n", prompt->philo_nbr);
@@ -107,54 +89,34 @@ void print_prompt_values(t_prompt_data *prompt)
         printf("El número máximo de comidas es %d\n", prompt->nbr_of_meals);    
 }
 
-pthread_t    *initiliaze_philosophers(int philo_nbr)
-{
-    pthread_t   *th;
-    int         i;
-
-    i = 0;
-    th = malloc(philo_nbr * sizeof(pthread_t));
-    if(th==NULL)
-        return (NULL);
-    return (th);
-}
 int main(int argc, char **argv)
 {
-    t_prompt_data   *prompt;
+    t_meal			*meal;
     pthread_t       *th;
-    //pthread_mutex_t *mutexes;
+    pthread_mutex_t *mutexes;
     int             i;
 
-    prompt = NULL;
-    //initial_time = NULL;
+    meal = NULL;
     th = NULL;
     i = 0;
     if(argc == 5 || argc == 6)
     {
-        prompt = init_prompt(argc, argv);
-        if(prompt == NULL)
+		//Comprobar que los datos metidos son todos numéricos.
+		//Inicializar los datos (campo 'data' de 'meal')
+        meal = initialize_meal(argc, argv);
+        if(meal == NULL)
         {
             printf("Failed to allocate memory\n");
             return 1;
         }
-/*         print_prompt_values(prompt);
-        usleep(prompt->time_to_die);
-        printf("Time elapsed time_to_die: %ld\n", get_relative_microseconds(prompt->initial_time));
-        usleep(prompt->time_to_eat);
-        printf("Time elapsed time_to_eat: %ld\n", get_relative_microseconds(prompt->initial_time));
-        usleep(prompt->time_to_sleep);
-        printf("Time elapsed time_to_sleep: %ld\n", get_relative_microseconds(prompt->initial_time)); */
-        th = initiliaze_philosophers(prompt->philo_nbr);
         pthread_mutex_init(&mutex, NULL);
-        while(i < prompt->philo_nbr)
+        while(i < meal->data->philo_nbr)
         {
-            //pthread_create(&th[i], NULL, &routine, NULL);
-            //pthread_create(&th[i], NULL, &full_routine,(void *)&initial_time);
-            pthread_create(&th[i], NULL, &routine_w_struct,(void *)prompt);
+            pthread_create(&th[i], NULL, &routine_w_struct,(void *)meal);
             i++;
         }
         i = 0;
-        while(i < prompt->philo_nbr)
+        while(i < meal->data->philo_nbr)
         {
             pthread_join(th[i], NULL);
             i++;
