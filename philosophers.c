@@ -6,52 +6,21 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 11:12:52 by ozini             #+#    #+#             */
-/*   Updated: 2024/05/28 17:49:56 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/01 10:48:09 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <sys/time.h>
-#include <pthread.h>
+#include "philosophers.h"
 
 int mails = 0;
 int lock = 0;
 pthread_mutex_t mutex;
 
-typedef struct prompt_data_s
-{
-    int philo_nbr;
-    int time_to_die;
-    int time_to_eat;
-    int time_to_sleep;
-    int nbr_of_meals;
-    long    initial_time;
-}   prompt_data_t;
-
-long    get_absolute_microseconds()
-{
-    struct timeval tv;
-    long    microseconds;
-    
-    gettimeofday(&tv, NULL);
-    microseconds = tv.tv_sec * 1000000 + tv.tv_usec;
-    return (microseconds);
-    
-}
-long    get_relative_microseconds(long initial_time)
-{
-    long    current_microseconds;
-
-    current_microseconds = get_absolute_microseconds();
-    return(current_microseconds - initial_time);
-}
 void*   routine_w_struct(void *arg)
 {
-    prompt_data_t    *prompt;
+    t_prompt_data    *prompt;
 
-    prompt = (prompt_data_t *)arg;
+    prompt = (t_prompt_data *)arg;
     pthread_mutex_lock(&mutex);
     //eating.
     usleep(prompt->time_to_eat);
@@ -92,42 +61,16 @@ void*   routine()
     }
     return (NULL);
 }
-int ft_atoi(char *str)
+t_prompt_data *init_prompt(int argc, char **argv)
 {
-    long number;
-    int sign;
-
-    number = 0;
-    sign = 0;
-    while(*str >= 9 && *str <= 13)
-        str++;
-    if(*str == '-' || *str == '+')
-    {
-        if(*str == '-')
-            sign = 1;
-        str++;
-    }
-    while(*str >= '0' && *str<= '9')
-    {
-        number = number * 10 + (*str - '0');
-        str++;
-    }
-    if(sign)
-        return (-number);
-    else
-        return (number);
-}
-
-prompt_data_t *init_prompt(int argc, char **argv)
-{
-    prompt_data_t   *prompt;
+    t_prompt_data   *prompt;
     int             i;
     
     i = 1;
     //Aquí tendría que meter una función que comprobase que
     //todos los valores son numéricos. Si alguna de ellos falla
     //devuelvo NULL.
-    prompt = malloc(sizeof(prompt_data_t));
+    prompt = malloc(sizeof(t_prompt_data));
     if(prompt == NULL)
     {
         //Aqui pongo un fd_putstr con el fd = 2
@@ -154,7 +97,7 @@ prompt_data_t *init_prompt(int argc, char **argv)
     
 }
 
-void print_prompt_values(prompt_data_t *prompt)
+void print_prompt_values(t_prompt_data *prompt)
 {
     printf("El número de hilos es %d\n", prompt->philo_nbr);
     printf("El tiempo de muerte es %d\n", prompt->time_to_die);
@@ -177,8 +120,9 @@ pthread_t    *initiliaze_philosophers(int philo_nbr)
 }
 int main(int argc, char **argv)
 {
-    prompt_data_t   *prompt;
+    t_prompt_data   *prompt;
     pthread_t       *th;
+    //pthread_mutex_t *mutexes;
     int             i;
 
     prompt = NULL;
@@ -187,7 +131,6 @@ int main(int argc, char **argv)
     i = 0;
     if(argc == 5 || argc == 6)
     {
-        printf("Correct number of arguments\n");
         prompt = init_prompt(argc, argv);
         if(prompt == NULL)
         {
