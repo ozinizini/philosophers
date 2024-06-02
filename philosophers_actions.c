@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 13:24:53 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/01 16:12:20 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/02 11:39:03 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ static long	print_action(t_philo_action action_type, t_philosopher *philo)
 
 	timestamp = get_relative_milliseconds(philo->meal->initial_time);
 	pthread_mutex_lock(&philo->meal->print_mutex);
-	if (action_type == EATING)
+	if (action_type == FORK)
+		printf("%ld %d has taken a fork\n", timestamp, philo->philo_index);
+	else if (action_type == EATING)
 	{
 		philo->eating_timestamp = timestamp;
 		printf("%ld %d is eating\n", timestamp, philo->philo_index);
@@ -56,6 +58,8 @@ void	philo_eating(t_philosopher *philo)
 			break ;
 		eating_elapsed_time = get_relative_milliseconds(timestamp);
 	}
+	pthread_mutex_unlock(&philo->right_fork);
+	pthread_mutex_unlock(&philo->left_fork);
 }
 
 void	philo_sleeping(t_philosopher *philo)
@@ -84,11 +88,13 @@ void	philo_sleeping(t_philosopher *philo)
 
 void	philo_thinking(t_philosopher *philo)
 {
-	long	timestamp;
+	print_action(THINKING, philo);
+}
 
-	timestamp = get_relative_milliseconds(philo->meal->initial_time);
-	pthread_mutex_lock(&philo->meal->print_mutex);
-	printf("%ld %d is thinking\n", timestamp, philo->philo_index);
-	pthread_mutex_unlock(&philo->meal->print_mutex);
+void	philo_waiting(t_philosopher *philo)
+{
+	pthread_mutex_lock(&philo->right_fork);
+	print_action(FORK, philo);
+	pthread_mutex_unlock(&philo->left_fork);
 }
 

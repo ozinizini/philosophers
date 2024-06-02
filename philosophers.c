@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 11:12:52 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/02 11:04:49 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/02 11:23:02 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,8 @@ void	*ultimate_routine(void *arg)
 		;
 	while (1)
 	{
-		pthread_mutex_lock(&philo->right_fork);
-		pthread_mutex_lock(&philo->left_fork);
+		philo_waiting(philo);
 		philo_eating(philo);
-		pthread_mutex_unlock(&philo->right_fork);
-		pthread_mutex_unlock(&philo->left_fork);
 		philo_sleeping(philo);
 		philo_thinking(philo);
 	}
