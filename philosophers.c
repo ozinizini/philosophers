@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 11:12:52 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/01 16:50:25 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/02 11:04:49 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@ void	*ultimate_routine(void *arg)
 	t_philosopher	*philo;
 
 	philo = (t_philosopher *)arg;
+
+	while (!philo->meal->start_meal)
+		;
 	while (1)
 	{
 		pthread_mutex_lock(&philo->right_fork);
@@ -69,7 +72,7 @@ int main(int argc, char **argv)
 		meal = initialize_meal(argc, argv);
 		if (meal == NULL)
 			return (1);
-		meal->initial_time = get_absolute_milliseconds();
+		//Inicializando los mutex/tenedores.
 		init_mutexes(meal);
 		while (i < meal->data->philo_nbr)
 		{
@@ -77,6 +80,10 @@ int main(int argc, char **argv)
 				&ultimate_routine, &meal->philosophers[i]);
 			i++;
 		}
+		//La comida no se inicia hasta que los filósofos están todos
+		//sentados/creados.
+		meal->start_meal = 1;
+		meal->initial_time = get_absolute_milliseconds();
 		i = 0;
 		while (i < meal->data->philo_nbr)
 		{

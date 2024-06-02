@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 10:46:18 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/01 16:40:30 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/02 11:02:46 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,9 @@ t_meal	*initialize_meal(int argc, char **argv)
 		printf("Failed to allocate memory for the meal\n");
 		return (NULL);
 	}
-	meal->finished_meal = 0;
 	meal->initial_time = 0;
+	meal->start_meal = 0;
+	meal->finished_meal = 0;
 	meal->data = init_prompt(argc, argv);
 	if (meal->data == NULL)
 		return (free(meal), NULL);
