@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 10:27:45 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/02 11:52:28 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/02 15:44:48 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,18 @@ t_meal	*initialize_meal(int argc, char **argv);
 int		philo_eating(t_philosopher *philo);
 int		philo_sleeping(t_philosopher *philo);
 int		philo_thinking(t_philosopher *philo);
+int		philo_waiting(t_philosopher *philo);
+void	*ultimate_routine(void *arg);
+
+//Starting and ending the dinner routine.
+
+//It initializes the mutexes (forks), creates the
+//philosophers (threads), helps synchronize the start
+//of the meal and sets up the time when it begins.
+void	begin_meal(t_meal *meal);
+//It joins the threads, destroys the mutexes
+//and frees the table t_table variable.
+void	end_meal(t_meal *meal);
 
 
 #endif

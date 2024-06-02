@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 13:24:53 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/02 12:28:16 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/02 15:49:21 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,10 @@
 static long	print_action(t_philo_action action_type, t_philosopher *philo)
 {
 	long	timestamp;
+	long	absolute_time;
 
-	timestamp = get_relative_milliseconds(philo->meal->initial_time);
+	absolute_time = get_absolute_milliseconds();
+	timestamp = absolute_time - philo->meal->initial_time;
 	pthread_mutex_lock(&philo->meal->print_mutex);
 	if (philo->meal->finished_meal)
 	{
@@ -27,7 +29,7 @@ static long	print_action(t_philo_action action_type, t_philosopher *philo)
 		printf("%ld %d has taken a fork\n", timestamp, philo->philo_index);
 	else if (action_type == EATING)
 	{
-		philo->eating_timestamp = timestamp;
+		philo->eating_timestamp = absolute_time;
 		printf("%ld %d is eating\n", timestamp, philo->philo_index);
 	}
 	else if (action_type == SLEEPING)
@@ -42,32 +44,31 @@ static long	print_action(t_philo_action action_type, t_philosopher *philo)
 		printf("%ld %d died\n", timestamp, philo->philo_index);
 	}
 	pthread_mutex_unlock(&philo->meal->print_mutex);
-	return (timestamp);
+	return (absolute_time);
 }
 
 int	philo_eating(t_philosopher *philo)
 {
-	long	timestamp;
 	long	eating_elapsed_time;
-	long	death_elapsed_time;
 
-	timestamp = print_action(EATING, philo);
-	if (timestamp == -1)
+	if (print_action(EATING, philo) == -1)
 	{
 		pthread_mutex_unlock(&philo->right_fork);
 		pthread_mutex_unlock(&philo->left_fork);
 		return (1);
 	}
-	philo->meals_eaten++;
-	eating_elapsed_time = get_relative_milliseconds(timestamp);
+	if (philo->meal->data->nbr_of_meals != -1)
+		philo->meals_eaten++;
+	//El eating_elapsed_time es el tiempo transcurrido
+	//en milisegundos desde el inicio de la etapa de comer
+	eating_elapsed_time = get_relative_milliseconds(philo->eating_timestamp);
 	while (eating_elapsed_time <= philo->meal->data->time_to_eat)
 	{
-		death_elapsed_time = get_relative_milliseconds(philo->eating_timestamp);
-		if (death_elapsed_time > philo->meal->data->time_to_die)
+		if (eating_elapsed_time > philo->meal->data->time_to_die)
 			print_action(DIED, philo);
 		if (philo->meal->finished_meal)
 			return (1);
-		eating_elapsed_time = get_relative_milliseconds(timestamp);
+		eating_elapsed_time = get_relative_milliseconds(philo->eating_timestamp);
 	}
 	pthread_mutex_unlock(&philo->right_fork);
 	pthread_mutex_unlock(&philo->left_fork);
@@ -76,22 +77,22 @@ int	philo_eating(t_philosopher *philo)
 
 int	philo_sleeping(t_philosopher *philo)
 {
-	long	timestamp;
+	long	absolute_time;
 	long	sleeping_elapsed_time;
 	long	death_elapsed_time;
 
-	timestamp = print_action(SLEEPING, philo);
-	if (timestamp == -1)
+	absolute_time = print_action(SLEEPING, philo);
+	if (absolute_time == -1)
 		return (1);
-	sleeping_elapsed_time = get_relative_milliseconds(timestamp);
-	while (timestamp <= philo->meal->data->time_to_sleep)
+	sleeping_elapsed_time = get_relative_milliseconds(absolute_time);
+	while (sleeping_elapsed_time <= philo->meal->data->time_to_sleep)
 	{
 		death_elapsed_time = get_relative_milliseconds(philo->eating_timestamp);
 		if (death_elapsed_time > philo->meal->data->time_to_die)
 			print_action(DIED, philo);
 		if (philo->meal->finished_meal)
 			return (1);
-		sleeping_elapsed_time = get_relative_milliseconds(timestamp);
+		sleeping_elapsed_time = get_relative_milliseconds(absolute_time);
 	}
 	return (0);
 }
@@ -106,33 +107,20 @@ int	philo_thinking(t_philosopher *philo)
 
 int	philo_waiting(t_philosopher *philo)
 {
-	long	timestamp;
-	long	waiting_elapsed_time;
-	long	death_elapsed_time;
-
+	//Coge el tenedor a su derecha.
 	pthread_mutex_lock(&philo->right_fork);
 	if (philo->meal->finished_meal)
 	{
 		pthread_mutex_unlock(&philo->right_fork);
 		return (1);
 	}
-	timestamp = print_action(FORK, philo);
-	if (timestamp == -1)
+	//timestamp es un tiempo relativo a initial_time.
+	if (print_action(FORK, philo) == -1)
 	{
 		pthread_mutex_unlock(&philo->right_fork);
 		return (1);
 	}
 	pthread_mutex_lock(&philo->left_fork);
-	waiting_elapsed_time = get_relative_milliseconds(timestamp);
-	while (timestamp <= philo->meal->data->time_to_sleep)
-	{
-		death_elapsed_time = get_relative_milliseconds(philo->eating_timestamp);
-		if (death_elapsed_time > philo->meal->data->time_to_die)
-			print_action(DIED, philo);
-		if (philo->meal->finished_meal)
-			return (1);
-		waiting_elapsed_time = get_relative_milliseconds(timestamp);
-	}
 	return (0);
 }
 

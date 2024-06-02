@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 10:46:18 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/02 11:02:46 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/02 14:08:09 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static t_prompt_data	*init_prompt(int argc, char **argv)
 		printf("Failed to allocate memory for the data\n");
 		return (NULL);
 	}
-	prompt->nbr_of_meals = 0;
+	prompt->nbr_of_meals = -1;
 	while (i < argc)
 	{
 		if (i == 1)
@@ -65,6 +65,7 @@ static t_philosopher	*initiliaze_philosophers(int philo_nbr, t_meal *meal)
 		else
 			philosophers[i].right_fork = meal->forks[i + 1];
 		philosophers[i].meal = meal;
+		i++;
 	}
 	return (philosophers);
 }
