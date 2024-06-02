@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 13:24:53 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/02 15:49:21 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/02 16:20:14 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,6 @@ int	philo_waiting(t_philosopher *philo)
 		pthread_mutex_unlock(&philo->right_fork);
 		return (1);
 	}
-	//timestamp es un tiempo relativo a initial_time.
 	if (print_action(FORK, philo) == -1)
 	{
 		pthread_mutex_unlock(&philo->right_fork);
