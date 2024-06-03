@@ -28,15 +28,15 @@ static t_prompt_data	*init_prompt(int argc, char **argv)
 	while (i < argc)
 	{
 		if (i == 1)
-			prompt->philo_nbr = ft_atoi(argv[1]);
+			prompt->philo_nbr = ft_atol(argv[1]);
 		if (i == 2)
-			prompt->time_to_die = ft_atoi(argv[2]);
+			prompt->time_to_die = ft_atol(argv[2]);
 		if (i == 3)
-			prompt->time_to_eat = ft_atoi(argv[3]);
+			prompt->time_to_eat = ft_atol(argv[3]);
 		if (i == 4)
-			prompt->time_to_sleep = ft_atoi(argv[4]);
+			prompt->time_to_sleep = ft_atol(argv[4]);
 		if (i == 5)
-			prompt->nbr_of_meals = ft_atoi(argv[5]);
+			prompt->nbr_of_meals = ft_atol(argv[5]);
 		i++;
 	}
 	return (prompt);
@@ -73,9 +73,7 @@ static t_philosopher	*initiliaze_philosophers(int philo_nbr, t_meal *meal)
 static pthread_mutex_t	*initialize_mutexes(int philo_nbr)
 {
 	pthread_mutex_t	*mutexes;
-	int				i;
-
-	i = 0;
+	
 	mutexes = malloc(philo_nbr * sizeof(pthread_mutex_t));
 	if (mutexes == NULL)
 	{

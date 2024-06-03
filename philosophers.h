@@ -18,6 +18,10 @@
 # include <unistd.h>
 # include <sys/time.h>
 # include <pthread.h>
+# include <limits.h>
+
+#define RST "\033[0m"
+#define RED "\033[1;31m"
 
 typedef enum e_philo_action
 {
@@ -62,15 +66,16 @@ struct	s_philosopher
 	t_meal			*meal;
 };
 
-long	get_absolute_milliseconds(void);
-long	get_relative_milliseconds(long initial_time);
-int		ft_atoi(char *str);
-t_meal	*initialize_meal(int argc, char **argv);
-int		philo_eating(t_philosopher *philo);
-int		philo_sleeping(t_philosopher *philo);
-int		philo_thinking(t_philosopher *philo);
-int		philo_waiting(t_philosopher *philo);
-void	*ultimate_routine(void *arg);
+long			get_absolute_milliseconds(void);
+long			get_relative_milliseconds(long initial_time);
+long long		ft_atol(char *str);
+void			check_valid_input(int argc, char **argv);
+t_meal			*initialize_meal(int argc, char **argv);
+int				philo_eating(t_philosopher *philo);
+int				philo_sleeping(t_philosopher *philo);
+int				philo_thinking(t_philosopher *philo);
+int				philo_waiting(t_philosopher *philo);
+void			*ultimate_routine(void *arg);
 
 //Starting and ending the dinner routine.
 

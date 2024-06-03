@@ -12,28 +12,62 @@
 
 #include "philosophers.h"
 
-int	ft_atoi(char *str)
+static char *check_valid_number(char *str)
 {
-	long	number;
-	int		sign;
+	while ((*str >= 9 && *str <= 13) || *str == 32)
+		str++;
+	if (*str == '+')
+		str++;
+	else if(*str == '-')
+	{
+		printf(RED "Negative numbers are not allowed\n" RST);
+		exit(EXIT_FAILURE);
+	}
+	if(!(*str >= '0' && *str <= '9'))
+	{
+		printf(RED "You must enter a number!\n" RST);
+		exit(EXIT_FAILURE);
+	}
+	return (str);
+}
+
+long long	ft_atol(char *str)
+{
+	long long	number;
 
 	number = 0;
-	sign = 0;
-	while (*str >= 9 && *str <= 13)
-		str++;
-	if (*str == '-' || *str == '+')
-	{
-		if (*str == '-')
-			sign = 1;
-		str++;
-	}
+	
+	str = check_valid_number(str);
 	while (*str >= '0' && *str <= '9')
 	{
 		number = number * 10 + (*str - '0');
 		str++;
 	}
-	if (sign)
-		return (-number);
+	if (number > INT_MAX)
+	{
+		printf(RED "The number must not exceed INT MAX\n" RST);
+		exit(EXIT_FAILURE);
+	}
 	else
 		return (number);
 }
+
+void	check_valid_input(int argc, char **argv)
+{
+	int	i;
+
+	i = 1;
+	while(i < argc)
+		ft_atol(argv[i++]);
+}
+
+/* int main(int argc, char **argv)
+{
+	int number;
+
+	if(argc == 2)
+	{
+		number = ft_atol(argv[1]);
+		printf("The number entered is %d", number);
+	}
+} */

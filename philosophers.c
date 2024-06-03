@@ -43,8 +43,7 @@ int	main(int argc, char **argv)
 	meal = NULL;
 	if (argc == 5 || argc == 6)
 	{
-		//Comprobar que los datos metidos son todos numéricos.
-		//Inicializar los datos (campo 'data' de 'meal')
+		
 		meal = initialize_meal(argc, argv);
 		if (meal == NULL)
 			return (1);
