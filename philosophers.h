@@ -61,8 +61,8 @@ struct	s_philosopher
 	long			eating_timestamp;
 	int				meals_eaten;
 	pthread_t		philo;
-	pthread_mutex_t	right_fork;
-	pthread_mutex_t	left_fork;
+	pthread_mutex_t	first_fork;
+	pthread_mutex_t	second_fork;
 	t_meal			*meal;
 };
 

@@ -53,8 +53,8 @@ int	philo_eating(t_philosopher *philo)
 
 	if (print_action(EATING, philo) == -1)
 	{
-		pthread_mutex_unlock(&philo->right_fork);
-		pthread_mutex_unlock(&philo->left_fork);
+		pthread_mutex_unlock(&philo->first_fork);
+		pthread_mutex_unlock(&philo->second_fork);
 		return (1);
 	}
 	if (philo->meal->data->nbr_of_meals != -1)
@@ -70,8 +70,8 @@ int	philo_eating(t_philosopher *philo)
 			return (1);
 		eating_elapsed_time = get_relative_milliseconds(philo->eating_timestamp);
 	}
-	pthread_mutex_unlock(&philo->right_fork);
-	pthread_mutex_unlock(&philo->left_fork);
+	pthread_mutex_unlock(&philo->first_fork);
+	pthread_mutex_unlock(&philo->second_fork);
 	return (0);
 }
 
@@ -108,18 +108,18 @@ int	philo_thinking(t_philosopher *philo)
 int	philo_waiting(t_philosopher *philo)
 {
 	//Coge el tenedor a su derecha.
-	pthread_mutex_lock(&philo->right_fork);
+	pthread_mutex_lock(&philo->first_fork);
 	if (philo->meal->finished_meal)
 	{
-		pthread_mutex_unlock(&philo->right_fork);
+		pthread_mutex_unlock(&philo->first_fork);
 		return (1);
 	}
 	if (print_action(FORK, philo) == -1)
 	{
-		pthread_mutex_unlock(&philo->right_fork);
+		pthread_mutex_unlock(&philo->first_fork);
 		return (1);
 	}
-	pthread_mutex_lock(&philo->left_fork);
+	pthread_mutex_lock(&philo->second_fork);
 	return (0);
 }
 
