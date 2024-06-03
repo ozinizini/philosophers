@@ -34,11 +34,11 @@ typedef enum e_philo_action
 
 typedef struct prompt_data_s
 {
-	int		philo_nbr;
-	int		time_to_die;
-	int		time_to_eat;
-	int		time_to_sleep;
-	int		nbr_of_meals;
+	long		philo_nbr;
+	long		time_to_die;
+	long		time_to_eat;
+	long		time_to_sleep;
+	long		nbr_of_meals;
 }	t_prompt_data;
 
 typedef struct s_philosopher	t_philosopher;
