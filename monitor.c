@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 14:59:24 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/02 15:47:46 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/06 10:09:18 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int	check_death(t_philosopher *philo)
 	}
 	else
 		return (0);
-
 }
 
 void	monitor_thread(t_meal *meal)
@@ -43,7 +42,6 @@ void	monitor_thread(t_meal *meal)
 		{
 			if (check_death(&meal->philosophers[i]))
 				break ;
-			
 			i++;
 		}
 	}

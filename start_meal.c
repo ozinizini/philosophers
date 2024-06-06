@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 12:49:12 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/02 13:33:58 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/06 10:40:11 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ static void	init_mutexes(t_meal *meal)
 	i = 0;
 	while (i < meal->data->philo_nbr)
 	{
+		//No estoy controlando si se produce un error
+		//Devuelve 0 cuando todo ha ido bien.
 		pthread_mutex_init(&meal->forks[i], NULL);
 		i++;
 	}

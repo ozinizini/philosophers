@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 10:46:18 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/02 16:17:03 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/06 10:49:24 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,7 @@
 static t_prompt_data	*init_prompt(int argc, char **argv)
 {
 	t_prompt_data	*prompt;
-	int				i;
 
-	i = 1;
 	prompt = malloc(sizeof(t_prompt_data));
 	if (prompt == NULL)
 	{
@@ -25,20 +23,12 @@ static t_prompt_data	*init_prompt(int argc, char **argv)
 		return (NULL);
 	}
 	prompt->nbr_of_meals = -1;
-	while (i < argc)
-	{
-		if (i == 1)
-			prompt->philo_nbr = ft_atol(argv[1]);
-		if (i == 2)
-			prompt->time_to_die = ft_atol(argv[2]);
-		if (i == 3)
-			prompt->time_to_eat = ft_atol(argv[3]);
-		if (i == 4)
-			prompt->time_to_sleep = ft_atol(argv[4]);
-		if (i == 5)
-			prompt->nbr_of_meals = ft_atol(argv[5]);
-		i++;
-	}
+	prompt->philo_nbr = ft_atol(argv[1]);
+	prompt->time_to_die = ft_atol(argv[2]);
+	prompt->time_to_eat = ft_atol(argv[3]);
+	prompt->time_to_sleep = ft_atol(argv[4]);
+	if (argc == 6)
+		prompt->nbr_of_meals = ft_atol(argv[5]);
 	return (prompt);
 }
 
