@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 11:12:52 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/06 11:35:04 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/06 14:02:18 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ void	*ultimate_routine(void *arg)
 	t_philosopher	*philo;
 
 	philo = (t_philosopher *)arg;
-	while (!philo->meal->start_meal)
+	while (!read_start_meal(philo->meal))
 		;
-	philo->eating_timestamp = philo->meal->initial_time;
+	philo->eating_timestamp = read_initial_time(philo->meal);
 	while (1)
 	{
 		if (philo_waiting(philo))

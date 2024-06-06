@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 10:46:18 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/06 11:40:20 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/06 16:32:54 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ static t_philosopher	*initiliaze_philosophers(int philo_nbr, t_meal *meal)
 	if (philosophers == NULL)
 		return (return_null_message("Failed to allocate"
 				" memory for the philosophers\n"));
+	//Para cinco filósofos, forks tiene tamaño 5, así que la última posición es forks[4]
 	while (i < philo_nbr)
 	{
 		philosophers[i].philo_index = i + 1;
@@ -52,19 +53,27 @@ static t_philosopher	*initiliaze_philosophers(int philo_nbr, t_meal *meal)
 			philosophers[i].second_fork = meal->forks[(i + 1) % philo_nbr];
 		}
 		philosophers[i].meal = meal;
+		printf("Philo %d takes first_fork %d and second_fork %d\n", philosophers[i].philo_index, philosophers[i].first_fork.mtx_index, philosophers[i].second_fork.mtx_index);
 		i++;
 	}
 	return (philosophers);
 }
 
-static pthread_mutex_t	*initialize_mutexes(int philo_nbr)
+static t_mtx	*initialize_mutexes(int philo_nbr)
 {
-	pthread_mutex_t	*mutexes;
+	t_mtx	*mutexes;
+	int		i;
 
-	mutexes = malloc(philo_nbr * sizeof(pthread_mutex_t));
+	i = 0;
+	mutexes = malloc(philo_nbr * sizeof(t_mtx));
 	if (mutexes == NULL)
 		return (return_null_message("Failed to allocate memory "
 				"for the forks\n"));
+	while (i < philo_nbr)
+	{
+		mutexes[i].mtx_index = i + 1;
+		i++;
+	}
 	return (mutexes);
 }
 

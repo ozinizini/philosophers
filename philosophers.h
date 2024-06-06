@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 10:27:45 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/06 11:59:52 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/06 16:33:03 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,26 @@
 # include <sys/time.h>
 # include <pthread.h>
 # include <limits.h>
+# include <errno.h>
 
 #define RST "\033[0m"
 #define RED "\033[1;31m"
 
 typedef enum e_philo_action
 {
-	FORK,
+	FORK_1,
+	FORK_2,
 	EATING,
 	SLEEPING,
 	THINKING,
 	DIED
 }	t_philo_action;
+
+typedef struct mtx_s
+{
+	pthread_mutex_t	mtx;
+	int				mtx_index;
+}	t_mtx;
 
 typedef struct prompt_data_s
 {
@@ -47,10 +55,11 @@ typedef struct meal_s
 {
 	t_prompt_data	*data;
 	t_philosopher	*philosophers;
-	pthread_mutex_t	*forks;
+	t_mtx			*forks;
 	pthread_mutex_t	print_mutex;
-	pthread_mutex_t	start_meal_mut;
-	pthread_mutex_t	fin_meal_mut;
+	pthread_mutex_t	init_time_mutex;
+	pthread_mutex_t	start_meal_mutex;
+	pthread_mutex_t	fin_meal_mutex;
 	long			initial_time;
 	int				start_meal;
 	int				finished_meal;
@@ -62,12 +71,18 @@ struct	s_philosopher
 	long			eating_timestamp;
 	int				meals_eaten;
 	pthread_t		philo;
-	pthread_mutex_t	first_fork;
-	pthread_mutex_t	second_fork;
+	t_mtx			first_fork;
+	t_mtx			second_fork;
 	t_meal			*meal;
 };
 
 void			*return_null_message(char *message);
+int				read_start_meal(t_meal *meal);
+void			set_start_meal(t_meal *meal);
+long			read_initial_time(t_meal *meal);
+void			set_initial_time(t_meal *meal);
+int				read_finished_meal(t_meal *meal);
+void			set_finished_meal(t_meal *meal);
 long			get_absolute_milliseconds(void);
 long			get_relative_milliseconds(long initial_time);
 long long		ft_atol(char *str);

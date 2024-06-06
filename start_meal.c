@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 12:49:12 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/06 12:00:43 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/06 16:27:19 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,26 @@
 static void	init_mutexes(t_meal *meal)
 {
 	int	i;
+	int	err;
 
 	i = 0;
+	err = 0;
 	while (i < meal->data->philo_nbr)
 	{
 		//No estoy controlando si se produce un error
 		//Devuelve 0 cuando todo ha ido bien.
-		pthread_mutex_init(&meal->forks[i], NULL);
+		if ((err = pthread_mutex_init(&meal->forks[i].mtx, NULL)))
+			printf("Mutex initialization failed, err: %d\n", err);
 		i++;
 	}
-	pthread_mutex_init(&meal->start_meal_mut, NULL);
-	pthread_mutex_init(&meal->print_mutex, NULL);
-	pthread_mutex_init(&meal->fin_meal_mut, NULL);
+	if ((err = pthread_mutex_init(&meal->start_meal_mutex, NULL)))
+		printf("Mutex initialization failed, err: %d\n", err);
+	if ((err = pthread_mutex_init(&meal->init_time_mutex, NULL)))
+		printf("Mutex initialization failed, err: %d\n", err);
+	if ((err = pthread_mutex_init(&meal->print_mutex, NULL)))
+		printf("Mutex initialization failed, err: %d\n", err);
+	if ((err = pthread_mutex_init(&meal->fin_meal_mutex, NULL)))
+		printf("Mutex initialization failed, err: %d\n", err);
 }
 
 static void	init_philo(t_meal *meal)
@@ -47,7 +55,7 @@ void	begin_meal(t_meal *meal)
 {
 	init_mutexes(meal);
 	init_philo(meal);
-	meal->start_meal = 1;
-	meal->initial_time = get_absolute_milliseconds();
+	set_start_meal(meal);
+	set_initial_time(meal);
 	//printf("The initial time is %ld\n", meal->initial_time);
 }

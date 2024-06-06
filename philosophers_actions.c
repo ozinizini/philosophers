@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 13:24:53 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/02 16:20:14 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/06 16:19:29 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,17 @@ static long	print_action(t_philo_action action_type, t_philosopher *philo)
 	long	absolute_time;
 
 	absolute_time = get_absolute_milliseconds();
-	timestamp = absolute_time - philo->meal->initial_time;
+	timestamp = absolute_time - read_initial_time(philo->meal);
 	pthread_mutex_lock(&philo->meal->print_mutex);
 	if (philo->meal->finished_meal)
 	{
 		pthread_mutex_unlock(&philo->meal->print_mutex);
 		return (-1);
 	}
-	if (action_type == FORK)
-		printf("%ld %d has taken a fork\n", timestamp, philo->philo_index);
+	if (action_type == FORK_1)
+		printf("%ld %d has taken first fork %d\n", timestamp, philo->philo_index, philo->first_fork.mtx_index);
+	else if (action_type == FORK_2)
+		printf("%ld %d has taken second fork %d\n", timestamp, philo->philo_index, philo->second_fork.mtx_index);
 	else if (action_type == EATING)
 	{
 		philo->eating_timestamp = absolute_time;
@@ -38,9 +40,7 @@ static long	print_action(t_philo_action action_type, t_philosopher *philo)
 		printf("%ld %d is thinking\n", timestamp, philo->philo_index);
 	else if (action_type == DIED)
 	{
-		pthread_mutex_lock(&philo->meal->fin_meal_mut);
-		philo->meal->finished_meal = 1;
-		pthread_mutex_unlock(&philo->meal->fin_meal_mut);
+		set_finished_meal(philo->meal);
 		printf("%ld %d died\n", timestamp, philo->philo_index);
 	}
 	pthread_mutex_unlock(&philo->meal->print_mutex);
@@ -53,8 +53,8 @@ int	philo_eating(t_philosopher *philo)
 
 	if (print_action(EATING, philo) == -1)
 	{
-		pthread_mutex_unlock(&philo->first_fork);
-		pthread_mutex_unlock(&philo->second_fork);
+		pthread_mutex_unlock(&philo->first_fork.mtx);
+		pthread_mutex_unlock(&philo->second_fork.mtx);
 		return (1);
 	}
 	if (philo->meal->data->nbr_of_meals != -1)
@@ -70,8 +70,8 @@ int	philo_eating(t_philosopher *philo)
 			return (1);
 		eating_elapsed_time = get_relative_milliseconds(philo->eating_timestamp);
 	}
-	pthread_mutex_unlock(&philo->first_fork);
-	pthread_mutex_unlock(&philo->second_fork);
+	pthread_mutex_unlock(&philo->first_fork.mtx);
+	pthread_mutex_unlock(&philo->second_fork.mtx);
 	return (0);
 }
 
@@ -107,19 +107,35 @@ int	philo_thinking(t_philosopher *philo)
 
 int	philo_waiting(t_philosopher *philo)
 {
-	//Coge el tenedor a su derecha.
-	pthread_mutex_lock(&philo->first_fork);
-	if (philo->meal->finished_meal)
+	int err;
+
+	err = 0;
+	//Coge el tenedor
+	if((err = pthread_mutex_lock(&philo->first_fork.mtx)))
+		printf("Locking error with errno: %d\n", err);
+	if (read_finished_meal(philo->meal))
 	{
-		pthread_mutex_unlock(&philo->first_fork);
+		pthread_mutex_unlock(&philo->first_fork.mtx);
 		return (1);
 	}
-	if (print_action(FORK, philo) == -1)
+	if (print_action(FORK_1, philo) == -1)
 	{
-		pthread_mutex_unlock(&philo->first_fork);
+		pthread_mutex_unlock(&philo->first_fork.mtx);
 		return (1);
 	}
-	pthread_mutex_lock(&philo->second_fork);
+	if((err = pthread_mutex_lock(&philo->second_fork.mtx)))
+		printf("Locking error with errno: %d\n", err);
+	if (read_finished_meal(philo->meal))
+	{
+		pthread_mutex_unlock(&philo->first_fork.mtx);
+		pthread_mutex_unlock(&philo->second_fork.mtx);
+		return (1);
+	}
+	if (print_action(FORK_2, philo) == -1)
+	{
+		pthread_mutex_unlock(&philo->first_fork.mtx);
+		pthread_mutex_unlock(&philo->second_fork.mtx);
+		return (1);
+	}
 	return (0);
 }
-
