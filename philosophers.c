@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 11:12:52 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/02 16:09:38 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/06 11:29:29 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	*ultimate_routine(void *arg)
 	t_philosopher	*philo;
 
 	philo = (t_philosopher *)arg;
-
 	while (!philo->meal->start_meal)
 		;
 	philo->eating_timestamp = philo->meal->initial_time;
@@ -33,7 +32,6 @@ void	*ultimate_routine(void *arg)
 			break ;
 	}
 	return (NULL);
-
 }
 
 int	main(int argc, char **argv)
@@ -43,7 +41,8 @@ int	main(int argc, char **argv)
 	meal = NULL;
 	if (argc == 5 || argc == 6)
 	{
-		
+		if (argc == 6 && ft_atol(argv[5]) == 0)
+			printf("Zero meals entered!\n");
 		meal = initialize_meal(argc, argv);
 		if (meal == NULL)
 			return (1);

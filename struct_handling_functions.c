@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 10:46:18 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/06 10:49:24 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/06 11:20:12 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,7 @@ static t_prompt_data	*init_prompt(int argc, char **argv)
 
 	prompt = malloc(sizeof(t_prompt_data));
 	if (prompt == NULL)
-	{
-		printf("Failed to allocate memory for the data\n");
-		return (NULL);
-	}
+		return (return_null_message("Failed to allocate memory for the data"));
 	prompt->nbr_of_meals = -1;
 	prompt->philo_nbr = ft_atol(argv[1]);
 	prompt->time_to_die = ft_atol(argv[2]);
@@ -40,21 +37,19 @@ static t_philosopher	*initiliaze_philosophers(int philo_nbr, t_meal *meal)
 	i = 0;
 	philosophers = malloc(philo_nbr * sizeof(t_philosopher));
 	if (philosophers == NULL)
-	{
-		printf("Failed to allocate memory for the philosophers\n");
-		return (NULL);
-	}
+		return (return_null_message("Failed to allocate"
+				" memory for the philosophers\n"));
 	while (i < philo_nbr)
 	{
 		philosophers[i].philo_index = i + 1;
 		philosophers[i].eating_timestamp = 0;
 		philosophers[i].meals_eaten = 0;
-		philosophers[i].first_fork = meal->forks[i + 1];
+		philosophers[i].first_fork = meal->forks[(i + 1) % philo_nbr];
 		philosophers[i].second_fork = meal->forks[i];
-		if(philosophers[i].philo_index % 2 == 0)
+		if (philosophers[i].philo_index % 2 == 0)
 		{
 			philosophers[i].first_fork = meal->forks[i];
-			philosophers[i].second_fork = meal->forks[i + 1];
+			philosophers[i].second_fork = meal->forks[(i + 1) % philo_nbr];
 		}
 		philosophers[i].meal = meal;
 		i++;
@@ -68,10 +63,8 @@ static pthread_mutex_t	*initialize_mutexes(int philo_nbr)
 
 	mutexes = malloc(philo_nbr * sizeof(pthread_mutex_t));
 	if (mutexes == NULL)
-	{
-		printf("Failed to allocate memory for the forks\n");
-		return (NULL);
-	}
+		return (return_null_message("Failed to allocate memory "
+				"for the forks\n"));
 	return (mutexes);
 }
 
@@ -81,10 +74,7 @@ t_meal	*initialize_meal(int argc, char **argv)
 
 	meal = malloc(sizeof(t_meal));
 	if (meal == NULL)
-	{
-		printf("Failed to allocate memory for the meal\n");
-		return (NULL);
-	}
+		return (return_null_message("Failed to allocate memory for the meal"));
 	meal->initial_time = 0;
 	meal->start_meal = 0;
 	meal->finished_meal = 0;
