@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 12:49:12 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/06 11:41:56 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/06 12:00:43 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static void	init_mutexes(t_meal *meal)
 		pthread_mutex_init(&meal->forks[i], NULL);
 		i++;
 	}
+	pthread_mutex_init(&meal->start_meal_mut, NULL);
 	pthread_mutex_init(&meal->print_mutex, NULL);
 	pthread_mutex_init(&meal->fin_meal_mut, NULL);
 }
