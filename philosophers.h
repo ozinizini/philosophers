@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 10:27:45 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/06 16:33:03 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/06 16:44:43 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ struct	s_philosopher
 	long			eating_timestamp;
 	int				meals_eaten;
 	pthread_t		philo;
-	t_mtx			first_fork;
-	t_mtx			second_fork;
+	t_mtx			*first_fork;
+	t_mtx			*second_fork;
 	t_meal			*meal;
 };
 

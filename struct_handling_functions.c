@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 10:46:18 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/06 16:32:54 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/06 16:46:54 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,15 @@ static t_philosopher	*initiliaze_philosophers(int philo_nbr, t_meal *meal)
 		philosophers[i].philo_index = i + 1;
 		philosophers[i].eating_timestamp = 0;
 		philosophers[i].meals_eaten = 0;
-		philosophers[i].first_fork = meal->forks[(i + 1) % philo_nbr];
-		philosophers[i].second_fork = meal->forks[i];
+		philosophers[i].first_fork = &meal->forks[(i + 1) % philo_nbr];
+		philosophers[i].second_fork = &meal->forks[i];
 		if (philosophers[i].philo_index % 2 == 0)
 		{
-			philosophers[i].first_fork = meal->forks[i];
-			philosophers[i].second_fork = meal->forks[(i + 1) % philo_nbr];
+			philosophers[i].first_fork = &meal->forks[i];
+			philosophers[i].second_fork = &meal->forks[(i + 1) % philo_nbr];
 		}
 		philosophers[i].meal = meal;
-		printf("Philo %d takes first_fork %d and second_fork %d\n", philosophers[i].philo_index, philosophers[i].first_fork.mtx_index, philosophers[i].second_fork.mtx_index);
+		printf("Philo %d takes first_fork %d and second_fork %d\n", philosophers[i].philo_index, philosophers[i].first_fork->mtx_index, philosophers[i].second_fork->mtx_index);
 		i++;
 	}
 	return (philosophers);
