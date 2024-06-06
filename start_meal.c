@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 12:49:12 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/06 10:40:11 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/06 11:41:56 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ static void	init_mutexes(t_meal *meal)
 		pthread_mutex_init(&meal->forks[i], NULL);
 		i++;
 	}
+	pthread_mutex_init(&meal->print_mutex, NULL);
+	pthread_mutex_init(&meal->fin_meal_mut, NULL);
 }
 
 static void	init_philo(t_meal *meal)
@@ -33,6 +35,7 @@ static void	init_philo(t_meal *meal)
 	i = 0;
 	while (i < meal->data->philo_nbr)
 	{
+		//No estoy controlando el valor de retorno de pthread_create
 		pthread_create(&meal->philosophers[i].philo, NULL,
 			&ultimate_routine, &meal->philosophers[i]);
 		i++;
