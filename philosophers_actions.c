@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 13:24:53 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/07 11:29:11 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/07 12:45:39 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,6 @@ int	philo_eating(t_philosopher *philo)
 	eating_elapsed_time = get_relative_milliseconds(philo->eating_timestamp);
 	while (eating_elapsed_time <= philo->meal->data->time_to_eat)
 	{
-		if (eating_elapsed_time > philo->meal->data->time_to_die)
-			print_action(DIED, philo);
 		if (philo->meal->finished_meal)
 			return (1);
 		eating_elapsed_time = get_relative_milliseconds(philo->eating_timestamp);
@@ -76,7 +74,6 @@ int	philo_sleeping(t_philosopher *philo)
 {
 	long	absolute_time;
 	long	sleeping_elapsed_time;
-	long	death_elapsed_time;
 
 	absolute_time = print_action(SLEEPING, philo);
 	if (absolute_time == -1)
@@ -84,9 +81,6 @@ int	philo_sleeping(t_philosopher *philo)
 	sleeping_elapsed_time = get_relative_milliseconds(absolute_time);
 	while (sleeping_elapsed_time <= philo->meal->data->time_to_sleep)
 	{
-		death_elapsed_time = get_relative_milliseconds(philo->eating_timestamp);
-		if (death_elapsed_time > philo->meal->data->time_to_die)
-			print_action(DIED, philo);
 		if (philo->meal->finished_meal)
 			return (1);
 		sleeping_elapsed_time = get_relative_milliseconds(absolute_time);

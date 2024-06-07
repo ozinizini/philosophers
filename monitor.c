@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 14:59:24 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/07 11:50:53 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/07 11:58:40 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,8 @@ void	*monitor_thread(void *arg)
 	t_meal	*meal;
 
 	meal = (t_meal *)arg;
-	//Aquí tengo que sincronizarlo con los filósofos
-	//pero debería empezar antes que ellos, ¿no?
-/* 	while (!read_start_meal(meal))
-		; */
 	set_initial_time(meal);
 	set_start_meal(meal);
-	//No debería empezar hasta que todos los filósofos estén listos.
 	while (!read_finished_meal(meal))
 	{
 		full_counter = 0;
@@ -69,6 +64,5 @@ void	*monitor_thread(void *arg)
 		if (full_counter == meal->data->philo_nbr)
 			set_finished_meal(meal);
 	}
-	printf("Sale\n");
 	return (NULL);
 }
