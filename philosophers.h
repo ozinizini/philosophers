@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 10:27:45 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/06 16:44:43 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/07 11:14:23 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 # include <limits.h>
 # include <errno.h>
 
-#define RST "\033[0m"
-#define RED "\033[1;31m"
+# define RST "\033[0m"
+# define RED "\033[1;31m"
 
 typedef enum e_philo_action
 {
@@ -54,6 +54,7 @@ typedef struct s_philosopher	t_philosopher;
 typedef struct meal_s
 {
 	t_prompt_data	*data;
+	pthread_t		monitor;
 	t_philosopher	*philosophers;
 	t_mtx			*forks;
 	pthread_mutex_t	print_mutex;
@@ -69,7 +70,7 @@ struct	s_philosopher
 {
 	int				philo_index;
 	long			eating_timestamp;
-	int				meals_eaten;
+	long			meals_eaten;
 	pthread_t		philo;
 	t_mtx			*first_fork;
 	t_mtx			*second_fork;
@@ -87,12 +88,15 @@ long			get_absolute_milliseconds(void);
 long			get_relative_milliseconds(long initial_time);
 long long		ft_atol(char *str);
 void			check_valid_input(int argc, char **argv);
-t_meal			*initialize_meal(int argc, char **argv);
+t_meal			*set_up_meal(int argc, char **argv);
+long			print_action(t_philo_action action_type, t_philosopher *philo);
 int				philo_eating(t_philosopher *philo);
 int				philo_sleeping(t_philosopher *philo);
 int				philo_thinking(t_philosopher *philo);
 int				philo_waiting(t_philosopher *philo);
-void			*ultimate_routine(void *arg);
+void			*philo_routine(void *arg);
+void			*monitor_thread(void *arg);
+int				check_death(t_philosopher *philo);
 
 //Starting and ending the dinner routine.
 

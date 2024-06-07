@@ -6,13 +6,13 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 13:24:53 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/06 16:49:00 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/07 11:29:11 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-static long	print_action(t_philo_action action_type, t_philosopher *philo)
+long	print_action(t_philo_action action_type, t_philosopher *philo)
 {
 	long	timestamp;
 	long	absolute_time;
@@ -39,10 +39,7 @@ static long	print_action(t_philo_action action_type, t_philosopher *philo)
 	else if (action_type == THINKING)
 		printf("%ld %d is thinking\n", timestamp, philo->philo_index);
 	else if (action_type == DIED)
-	{
-		set_finished_meal(philo->meal);
 		printf("%ld %d died\n", timestamp, philo->philo_index);
-	}
 	pthread_mutex_unlock(&philo->meal->print_mutex);
 	return (absolute_time);
 }

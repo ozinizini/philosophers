@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 12:51:40 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/06 14:47:47 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/07 11:18:41 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,11 @@ static void	destroy_mutexes(t_meal *meal)
 	pthread_mutex_destroy(&meal->fin_meal_mutex);
 }
 
+static void	finish_monitor(t_meal *meal)
+{
+	pthread_join(meal->monitor, NULL);
+}
+
 static void	tidy_up_meal(t_meal *meal)
 {
 	free(meal->data);
@@ -50,6 +55,7 @@ static void	tidy_up_meal(t_meal *meal)
 
 void	end_meal(t_meal *meal)
 {
+	finish_monitor(meal);
 	finish_philos(meal);
 	destroy_mutexes(meal);
 	tidy_up_meal(meal);

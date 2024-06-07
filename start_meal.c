@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 12:49:12 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/06 16:27:19 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/07 11:34:30 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,22 @@ static void	init_philo(t_meal *meal)
 	{
 		//No estoy controlando el valor de retorno de pthread_create
 		pthread_create(&meal->philosophers[i].philo, NULL,
-			&ultimate_routine, &meal->philosophers[i]);
+			&philo_routine, &meal->philosophers[i]);
 		i++;
 	}
+}
+
+static void	init_monitor(t_meal *meal)
+{
+	pthread_create(&meal->monitor, NULL, &monitor_thread, meal);
 }
 
 void	begin_meal(t_meal *meal)
 {
 	init_mutexes(meal);
+	init_monitor(meal);
 	init_philo(meal);
-	set_start_meal(meal);
-	set_initial_time(meal);
+//	set_start_meal(meal);
+//	set_initial_time(meal);
 	//printf("The initial time is %ld\n", meal->initial_time);
 }

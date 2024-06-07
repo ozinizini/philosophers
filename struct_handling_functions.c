@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 10:46:18 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/06 16:46:54 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/07 11:14:33 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static t_mtx	*initialize_mutexes(int philo_nbr)
 	return (mutexes);
 }
 
-t_meal	*initialize_meal(int argc, char **argv)
+t_meal	*set_up_meal(int argc, char **argv)
 {
 	t_meal	*meal;
 
