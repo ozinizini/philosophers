@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 13:24:53 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/07 12:45:39 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/07 15:20:00 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,10 @@ long	print_action(t_philo_action action_type, t_philosopher *philo)
 	else if (action_type == THINKING)
 		printf("%ld %d is thinking\n", timestamp, philo->philo_index);
 	else if (action_type == DIED)
+	{
+		set_finished_meal(philo->meal);
 		printf("%ld %d died\n", timestamp, philo->philo_index);
+	}
 	pthread_mutex_unlock(&philo->meal->print_mutex);
 	return (absolute_time);
 }
@@ -62,7 +65,11 @@ int	philo_eating(t_philosopher *philo)
 	while (eating_elapsed_time <= philo->meal->data->time_to_eat)
 	{
 		if (philo->meal->finished_meal)
+		{
+			pthread_mutex_unlock(&philo->first_fork->mtx);
+			pthread_mutex_unlock(&philo->second_fork->mtx);
 			return (1);
+		}
 		eating_elapsed_time = get_relative_milliseconds(philo->eating_timestamp);
 	}
 	pthread_mutex_unlock(&philo->first_fork->mtx);
