@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 13:24:53 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/07 15:20:00 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/07 15:54:38 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,29 +52,17 @@ int	philo_eating(t_philosopher *philo)
 	long	eating_elapsed_time;
 
 	if (print_action(EATING, philo) == -1)
-	{
-		pthread_mutex_unlock(&philo->first_fork->mtx);
-		pthread_mutex_unlock(&philo->second_fork->mtx);
-		return (1);
-	}
+		return (release_forks(philo, 1));
 	if (philo->meal->data->nbr_of_meals != -1)
 		philo->meals_eaten++;
-	//El eating_elapsed_time es el tiempo transcurrido
-	//en milisegundos desde el inicio de la etapa de comer
 	eating_elapsed_time = get_relative_milliseconds(philo->eating_timestamp);
 	while (eating_elapsed_time <= philo->meal->data->time_to_eat)
 	{
 		if (philo->meal->finished_meal)
-		{
-			pthread_mutex_unlock(&philo->first_fork->mtx);
-			pthread_mutex_unlock(&philo->second_fork->mtx);
-			return (1);
-		}
+			return (release_forks(philo, 1));
 		eating_elapsed_time = get_relative_milliseconds(philo->eating_timestamp);
 	}
-	pthread_mutex_unlock(&philo->first_fork->mtx);
-	pthread_mutex_unlock(&philo->second_fork->mtx);
-	return (0);
+	return (release_forks(philo, 0));
 }
 
 int	philo_sleeping(t_philosopher *philo)
@@ -108,32 +96,17 @@ int	philo_waiting(t_philosopher *philo)
 	int err;
 
 	err = 0;
-	//Coge el tenedor
-	if((err = pthread_mutex_lock(&philo->first_fork->mtx)))
+	if ((err = pthread_mutex_lock(&philo->first_fork->mtx)))
 		printf("Locking error with errno: %d\n", err);
 	if (read_finished_meal(philo->meal))
-	{
-		pthread_mutex_unlock(&philo->first_fork->mtx);
-		return (1);
-	}
+		return (release_first_fork(philo));
 	if (print_action(FORK_1, philo) == -1)
-	{
-		pthread_mutex_unlock(&philo->first_fork->mtx);
-		return (1);
-	}
-	if((err = pthread_mutex_lock(&philo->second_fork->mtx)))
+		return (release_first_fork(philo));
+	if ((err = pthread_mutex_lock(&philo->second_fork->mtx)))
 		printf("Locking error with errno: %d\n", err);
 	if (read_finished_meal(philo->meal))
-	{
-		pthread_mutex_unlock(&philo->first_fork->mtx);
-		pthread_mutex_unlock(&philo->second_fork->mtx);
-		return (1);
-	}
+		return (release_forks(philo, 1));
 	if (print_action(FORK_2, philo) == -1)
-	{
-		pthread_mutex_unlock(&philo->first_fork->mtx);
-		pthread_mutex_unlock(&philo->second_fork->mtx);
-		return (1);
-	}
+		return (release_forks(philo, 1));
 	return (0);
 }

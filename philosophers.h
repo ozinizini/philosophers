@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 10:27:45 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/07 11:14:23 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/07 15:52:03 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ long			read_initial_time(t_meal *meal);
 void			set_initial_time(t_meal *meal);
 int				read_finished_meal(t_meal *meal);
 void			set_finished_meal(t_meal *meal);
+int				release_forks(t_philosopher *philo, int return_value);
+int				release_first_fork(t_philosopher *philo);
 long			get_absolute_milliseconds(void);
 long			get_relative_milliseconds(long initial_time);
 long long		ft_atol(char *str);
