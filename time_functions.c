@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 10:26:57 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/02 13:33:48 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/08 12:57:05 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,5 @@ long	get_relative_milliseconds(long initial_time)
 	long	current_milliseconds;
 
 	current_milliseconds = get_absolute_milliseconds();
-/* 	printf("current milliseconds: %ld\n", current_milliseconds);
-	printf("initial_time: %ld\n", initial_time); */
 	return (current_milliseconds - initial_time);
 }

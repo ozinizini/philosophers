@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mutexes.c                                          :+:      :+:    :+:   */
+/*   mutexes_1.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 13:13:01 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/07 15:51:38 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/08 12:57:47 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,34 +44,4 @@ void	set_initial_time(t_meal *meal)
 	pthread_mutex_lock(&meal->init_time_mutex);
 	meal->initial_time = get_absolute_milliseconds();
 	pthread_mutex_unlock(&meal->init_time_mutex);
-}
-
-int	read_finished_meal(t_meal *meal)
-{
-	int	finished_meal;
-
-	pthread_mutex_lock(&meal->fin_meal_mutex);
-	finished_meal = meal->finished_meal;
-	pthread_mutex_unlock(&meal->fin_meal_mutex);
-	return (finished_meal);
-}
-
-void	set_finished_meal(t_meal *meal)
-{
-	pthread_mutex_lock(&meal->fin_meal_mutex);
-	meal->finished_meal = 1;
-	pthread_mutex_unlock(&meal->fin_meal_mutex);
-}
-
-int	release_forks(t_philosopher *philo, int return_value)
-{
-	pthread_mutex_unlock(&philo->first_fork->mtx);
-	pthread_mutex_unlock(&philo->second_fork->mtx);
-	return (return_value);
-}
-
-int	release_first_fork(t_philosopher *philo)
-{
-	pthread_mutex_unlock(&philo->first_fork->mtx);
-	return (1);
 }

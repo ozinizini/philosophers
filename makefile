@@ -3,7 +3,8 @@ CLANG = clang
 FLAGS = -Wall -Wextra -Werror -pthread #-fsanitize=address -fno-omit-frame-pointer
 SRCS = end_meal.c\
 		monitor.c\
-		mutexes.c\
+		mutexes_1.c\
+		mutexes_2.c\
 		philosophers_actions.c\
 		philosophers.c\
 		start_meal.c\

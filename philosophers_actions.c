@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 13:24:53 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/08 12:27:12 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/08 12:57:35 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ int	philo_thinking(t_philosopher *philo)
 
 	absolute_time = get_absolute_milliseconds();
 	timestamp = absolute_time - read_initial_time(philo->meal);
-
 	if (!print_action(THINKING, philo, timestamp, absolute_time))
 		return (1);
 	else
