@@ -16,19 +16,32 @@ NAME = philosophers
 
 OBJECTS = $(SOURCES:.c=.o)
 
+# ANSI escape codes for bold colors
+BOLD_RED = \033[1;31m
+BOLD_GREEN = \033[1;32m
+BOLD_YELLOW = \033[1;33m
+BOLD_BLUE = \033[1;34m
+BOLD_MAGENTA = \033[1;35m
+BOLD_CYAN = \033[1;36m
+BOLD_WHITE = \033[1;37m
+NC = \033[0m # No Color
+
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CLANG) $(FLAGS) $(OBJS) -o $(NAME)
+	@$(CLANG) $(FLAGS) $(OBJS) -o $(NAME)
+	@echo "$(BOLD_GREEN)philosophers executable compiled and ready to be used!$(NC)"
 
 %.o: %.c
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+	@$(CLANG) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
-	rm -f $(OBJECTS)
+	@echo "Cleaning object files"
+	@rm -f $(OBJS)
 
 fclean: clean
-	rm -f $(NAME)
+	@echo "Cleaning philosophers program"
+	@rm -f $(NAME)
 
 re: fclean all
 
