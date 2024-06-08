@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 11:12:52 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/08 12:35:21 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/08 13:17:53 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,7 @@ int	main(int argc, char **argv)
 	meal = NULL;
 	if (argc == 5 || argc == 6)
 	{
-		if (argc == 6 && ft_atol(argv[5]) == 0)
-			printf("Zero meals entered, no dinner for you!\n");
+		check_valid_input(argc, argv);
 		meal = set_up_meal(argc, argv);
 		if (meal == NULL)
 			return (1);
@@ -50,6 +49,6 @@ int	main(int argc, char **argv)
 		end_meal(meal);
 	}
 	else
-		printf("Incorrect number of arguments\n");
+		printf(RED "Incorrect number of arguments\n" RST);
 	return (0);
 }
