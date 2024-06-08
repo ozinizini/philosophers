@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 13:24:53 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/08 14:15:35 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/08 16:47:05 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,10 @@
 long	print_action(t_philo_action action_type, t_philosopher *philo,
 	long timestamp, long absolute_time)
 {
+
+	
 	pthread_mutex_lock(&philo->meal->print_mutex);
-	if (read_finished_meal(philo->meal))
+	if (read_finished_meal(philo->meal) && action_type != DIED)
 	{
 		pthread_mutex_unlock(&philo->meal->print_mutex);
 		return (0);
@@ -34,7 +36,7 @@ long	print_action(t_philo_action action_type, t_philosopher *philo,
 		printf("%ld %d is thinking\n", timestamp, philo->philo_index);
 	else if (action_type == DIED)
 	{
-		set_finished_meal(philo->meal);
+		//set_finished_meal(philo->meal);
 		printf("%ld %d died\n", timestamp, philo->philo_index);
 	}
 	pthread_mutex_unlock(&philo->meal->print_mutex);
@@ -56,7 +58,7 @@ int	philo_eating(t_philosopher *philo)
 	eating_elapsed_time = get_relative_milliseconds(philo->eating_timestamp);
 	while (eating_elapsed_time <= philo->meal->data->time_to_eat)
 	{
-		if (philo->meal->finished_meal)
+		if (read_finished_meal(philo->meal))
 			return (release_forks(philo, 1));
 		eating_elapsed_time = get_relative_milliseconds
 			(philo->eating_timestamp);
@@ -77,7 +79,7 @@ int	philo_sleeping(t_philosopher *philo)
 	sleeping_elapsed_time = get_relative_milliseconds(absolute_time);
 	while (sleeping_elapsed_time <= philo->meal->data->time_to_sleep)
 	{
-		if (philo->meal->finished_meal)
+		if (read_finished_meal(philo->meal))
 			return (1);
 		sleeping_elapsed_time = get_relative_milliseconds(absolute_time);
 	}
