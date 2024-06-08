@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 13:24:53 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/08 10:28:17 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/08 10:33:26 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,18 +103,20 @@ int	philo_waiting(t_philosopher *philo)
 	long	timestamp;
 	long	absolute_time;
 
-	absolute_time = get_absolute_milliseconds();
-	timestamp = absolute_time - read_initial_time(philo->meal);
 
 	err = 0;
 	if ((err = pthread_mutex_lock(&philo->first_fork->mtx)))
 		printf("Locking error with errno: %d\n", err);
+	absolute_time = get_absolute_milliseconds();
+	timestamp = absolute_time - read_initial_time(philo->meal);
 	if (read_finished_meal(philo->meal))
 		return (release_first_fork(philo));
 	if (!print_action(FORK_1, philo, timestamp, absolute_time))
 		return (release_first_fork(philo));
 	if ((err = pthread_mutex_lock(&philo->second_fork->mtx)))
 		printf("Locking error with errno: %d\n", err);
+	absolute_time = get_absolute_milliseconds();
+	timestamp = absolute_time - read_initial_time(philo->meal);
 	if (read_finished_meal(philo->meal))
 		return (release_forks(philo, 1));
 	if (!print_action(FORK_2, philo, timestamp, absolute_time))
