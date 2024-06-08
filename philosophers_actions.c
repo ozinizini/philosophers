@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 13:24:53 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/08 12:57:35 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/08 14:15:35 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ long	print_action(t_philo_action action_type, t_philosopher *philo,
 	long timestamp, long absolute_time)
 {
 	pthread_mutex_lock(&philo->meal->print_mutex);
-	if (philo->meal->finished_meal)
+	if (read_finished_meal(philo->meal))
 	{
 		pthread_mutex_unlock(&philo->meal->print_mutex);
 		return (0);

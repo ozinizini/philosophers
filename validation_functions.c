@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 10:41:47 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/08 13:57:46 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/08 14:01:34 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,3 @@ void	check_valid_input(int argc, char **argv)
 	if (ft_atol(argv[1]) == 0)
 		error_message("Zero philosophers entered, no dinner for you!\n");
 }
-
-/* int main(int argc, char **argv)
-{
-	int number;
-
-	if(argc == 2)
-	{
-		number = ft_atol(argv[1]);
-		printf("The number entered is %d", number);
-	}
-} */
