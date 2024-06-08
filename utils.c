@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 11:04:33 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/06 11:10:57 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/08 12:45:02 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,6 @@
 
 void	*return_null_message(char *message)
 {
-	printf("%s\n", message);
+	printf("Failed to allocate memory for the %s\n", message);
 	return (NULL);
 }

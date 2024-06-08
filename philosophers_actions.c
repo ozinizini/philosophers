@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 13:24:53 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/08 10:33:26 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/08 12:27:12 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ int	philo_eating(t_philosopher *philo)
 	{
 		if (philo->meal->finished_meal)
 			return (release_forks(philo, 1));
-		eating_elapsed_time = get_relative_milliseconds(philo->eating_timestamp);
+		eating_elapsed_time = get_relative_milliseconds
+			(philo->eating_timestamp);
 	}
 	return (release_forks(philo, 0));
 }
@@ -103,7 +104,6 @@ int	philo_waiting(t_philosopher *philo)
 	long	timestamp;
 	long	absolute_time;
 
-
 	err = 0;
 	if ((err = pthread_mutex_lock(&philo->first_fork->mtx)))
 		printf("Locking error with errno: %d\n", err);
@@ -113,6 +113,12 @@ int	philo_waiting(t_philosopher *philo)
 		return (release_first_fork(philo));
 	if (!print_action(FORK_1, philo, timestamp, absolute_time))
 		return (release_first_fork(philo));
+	if (philo->first_fork->mtx_index == philo->second_fork->mtx_index)
+	{
+		while (!read_finished_meal(philo->meal))
+			;
+		return (release_first_fork(philo));
+	}
 	if ((err = pthread_mutex_lock(&philo->second_fork->mtx)))
 		printf("Locking error with errno: %d\n", err);
 	absolute_time = get_absolute_milliseconds();

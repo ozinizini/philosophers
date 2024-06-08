@@ -1,6 +1,6 @@
 
 CLANG = clang
-FLAGS = -Wall -Wextra -Werror -pthread
+FLAGS = -Wall -Wextra -Werror -pthread #-fsanitize=address -fno-omit-frame-pointer
 SRCS = end_meal.c\
 		monitor.c\
 		mutexes.c\

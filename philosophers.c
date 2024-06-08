@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 11:12:52 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/07 15:12:46 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/08 12:35:21 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	main(int argc, char **argv)
 	if (argc == 5 || argc == 6)
 	{
 		if (argc == 6 && ft_atol(argv[5]) == 0)
-			printf("Zero meals entered!\n");
+			printf("Zero meals entered, no dinner for you!\n");
 		meal = set_up_meal(argc, argv);
 		if (meal == NULL)
 			return (1);
