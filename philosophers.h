@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 10:27:45 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/08 10:17:15 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/08 13:53:48 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ struct	s_philosopher
 };
 
 void			*return_null_message(char *message);
+void			error_message(char *message);
 int				read_start_meal(t_meal *meal);
 void			set_start_meal(t_meal *meal);
 long			read_initial_time(t_meal *meal);

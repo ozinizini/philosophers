@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 10:41:47 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/08 13:21:09 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/08 13:57:46 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,9 @@ static char	*check_valid_number(char *str)
 	if (*str == '+')
 		str++;
 	else if (*str == '-')
-	{
-		printf(RED "Negative numbers are not allowed!\n" RST);
-		exit(EXIT_FAILURE);
-	}
+		error_message("Negative numbers are not allowed!\n");
 	if (!(*str >= '0' && *str <= '9'))
-	{
-		printf(RED "You must enter numbers only!\n" RST);
-		exit(EXIT_FAILURE);
-	}
+		error_message("You must enter numbers only!\n");
 	return (str);
 }
 
@@ -43,12 +37,8 @@ long long	ft_atol(char *str)
 		str++;
 	}
 	if (number > INT_MAX)
-	{
-		printf(RED "The number must not exceed INT MAX\n" RST);
-		exit(EXIT_FAILURE);
-	}
-	else
-		return (number);
+		error_message("The number must not exceed INT MAX\n");
+	return (number);
 }
 
 void	check_valid_input(int argc, char **argv)
@@ -59,9 +49,9 @@ void	check_valid_input(int argc, char **argv)
 	while (i < argc)
 		ft_atol(argv[i++]);
 	if (argc == 6 && ft_atol(argv[5]) == 0)
-		printf(RED "Zero meals entered, no dinner for you!\n" RST);
+		error_message("Zero meals entered, no dinner for you!\n");
 	if (ft_atol(argv[1]) == 0)
-		printf(RED "Zero philosophers entered, no dinner for you!\n" RST);
+		error_message("Zero philosophers entered, no dinner for you!\n");
 }
 
 /* int main(int argc, char **argv)
