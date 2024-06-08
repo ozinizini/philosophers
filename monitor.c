@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 14:59:24 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/07 15:37:12 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/08 10:27:50 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,17 @@ static int	check_full(t_philosopher *philo)
 int	check_death(t_philosopher *philo)
 {
 	long	death_elapsed_time;
+	long	timestamp;
+	long	absolute_time;
 
 	if (!philo->eating_timestamp)
 		return (0);
 	death_elapsed_time = get_relative_milliseconds(philo->eating_timestamp);
 	if (death_elapsed_time > philo->meal->data->time_to_die)
 	{
-		print_action(DIED, philo);
+		absolute_time = get_absolute_milliseconds();
+		timestamp = absolute_time - read_initial_time(philo->meal);
+		print_action(DIED, philo, timestamp, absolute_time);
 		return (1);
 	}
 	else

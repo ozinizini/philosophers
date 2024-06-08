@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 10:27:45 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/07 15:52:03 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/08 10:17:15 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,8 @@ long			get_relative_milliseconds(long initial_time);
 long long		ft_atol(char *str);
 void			check_valid_input(int argc, char **argv);
 t_meal			*set_up_meal(int argc, char **argv);
-long			print_action(t_philo_action action_type, t_philosopher *philo);
+long			print_action(t_philo_action action_type, t_philosopher *philo,
+					long timestamp, long absolute_time);
 int				philo_eating(t_philosopher *philo);
 int				philo_sleeping(t_philosopher *philo);
 int				philo_thinking(t_philosopher *philo);
@@ -105,10 +106,8 @@ int				check_death(t_philosopher *philo);
 //It initializes the mutexes (forks), creates the
 //philosophers (threads), helps synchronize the start
 //of the meal and sets up the time when it begins.
-void	begin_meal(t_meal *meal);
+void			begin_meal(t_meal *meal);
 //It joins the threads, destroys the mutexes
 //and frees the table t_table variable.
-void	end_meal(t_meal *meal);
-
-
+void			end_meal(t_meal *meal);
 #endif
