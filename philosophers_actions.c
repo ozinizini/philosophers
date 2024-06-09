@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 13:24:53 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/09 16:27:03 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/09 16:55:41 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,18 +44,18 @@ int	philo_eating(t_philosopher *philo)
 
 	absolute_time = get_absolute_milliseconds();
 	timestamp = absolute_time - read_initial_time(philo->meal);
-	philo->eating_timestamp = absolute_time;
+	set_eating_time(philo, absolute_time);
 	if (!print_action(EATING, philo, timestamp))
 		return (release_forks(philo, 1));
 	if (philo->meal->data->nbr_of_meals != -1)
 		philo->meals_eaten++;
-	eating_elapsed_time = get_relative_milliseconds(philo->eating_timestamp);
+	eating_elapsed_time = get_relative_milliseconds(read_eating_time(philo));
 	while (eating_elapsed_time <= philo->meal->data->time_to_eat)
 	{
 		if (read_finished_meal(philo->meal))
 			return (release_forks(philo, 1));
 		eating_elapsed_time = get_relative_milliseconds
-			(philo->eating_timestamp);
+			(read_eating_time(philo));
 	}
 	return (release_forks(philo, 0));
 }
