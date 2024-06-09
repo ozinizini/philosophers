@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 13:24:53 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/08 16:47:05 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/09 16:11:02 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ long	print_action(t_philo_action action_type, t_philosopher *philo,
 	long timestamp, long absolute_time)
 {
 
-	
 	pthread_mutex_lock(&philo->meal->print_mutex);
 	if (read_finished_meal(philo->meal) && action_type != DIED)
 	{
@@ -114,6 +113,7 @@ int	philo_waiting(t_philosopher *philo)
 		return (release_first_fork(philo));
 	if (!print_action(FORK_1, philo, timestamp, absolute_time))
 		return (release_first_fork(philo));
+	//Code for one philosopher
 	if (philo->first_fork->mtx_index == philo->second_fork->mtx_index)
 	{
 		while (!read_finished_meal(philo->meal))

@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 14:59:24 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/08 14:19:37 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/09 15:50:45 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	*monitor_thread(void *arg)
 	t_meal	*meal;
 
 	meal = (t_meal *)arg;
+	//Realmente no necesito proteger el meal->initial_time
 	set_initial_time(meal);
 	set_start_meal(meal);
 	while (!read_finished_meal(meal))

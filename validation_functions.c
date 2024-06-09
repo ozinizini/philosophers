@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 10:41:47 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/08 14:01:34 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/09 13:44:09 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	check_valid_input(int argc, char **argv)
 	while (i < argc)
 		ft_atol(argv[i++]);
 	if (argc == 6 && ft_atol(argv[5]) == 0)
-		error_message("Zero meals entered, no dinner for you!\n");
+		error_message("Zero meals entered, no dinner takes place!\n");
 	if (ft_atol(argv[1]) == 0)
-		error_message("Zero philosophers entered, no dinner for you!\n");
+		error_message("Zero philosophers showed up, no dinner takes place!\n");
 }
