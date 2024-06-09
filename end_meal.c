@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 12:51:40 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/07 15:03:49 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/09 16:43:15 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ static void	destroy_mutexes(t_meal *meal)
 	while (i < meal->data->philo_nbr)
 	{
 		pthread_mutex_destroy(&meal->forks[i].mtx);
+		pthread_mutex_destroy(&meal->philosophers[i].eating_time_mutex);
 		i++;
 	}
 	pthread_mutex_destroy(&meal->start_meal_mutex);

@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 14:59:24 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/09 15:50:45 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/09 16:32:17 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	check_death(t_philosopher *philo)
 		set_finished_meal(philo->meal);
 		absolute_time = get_absolute_milliseconds();
 		timestamp = absolute_time - read_initial_time(philo->meal);
-		print_action(DIED, philo, timestamp, absolute_time);
+		print_action(DIED, philo, timestamp);
 		return (1);
 	}
 	else

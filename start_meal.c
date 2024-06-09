@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 12:49:12 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/08 12:12:26 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/09 16:41:53 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@ static void	init_mutexes(t_meal *meal)
 		//No estoy controlando si se produce un error
 		//Devuelve 0 cuando todo ha ido bien.
 		if ((err = pthread_mutex_init(&meal->forks[i].mtx, NULL)))
+			printf("Mutex initialization failed, err: %d\n", err);
+		if ((err = pthread_mutex_init(&meal->philosophers[i].
+					eating_time_mutex, NULL)))
 			printf("Mutex initialization failed, err: %d\n", err);
 		i++;
 	}
