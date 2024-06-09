@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 13:24:53 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/09 16:11:02 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/09 16:18:16 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ long	print_action(t_philo_action action_type, t_philosopher *philo,
 		pthread_mutex_unlock(&philo->meal->print_mutex);
 		return (0);
 	}
-	if (action_type == FORK_1 || action_type == FORK_2)
+	if (action_type == FORK)
 		printf("%ld %d has taken a fork\n", timestamp, philo->philo_index);
 	else if (action_type == EATING)
 	{
@@ -111,7 +111,7 @@ int	philo_waiting(t_philosopher *philo)
 	timestamp = absolute_time - read_initial_time(philo->meal);
 	if (read_finished_meal(philo->meal))
 		return (release_first_fork(philo));
-	if (!print_action(FORK_1, philo, timestamp, absolute_time))
+	if (!print_action(FORK, philo, timestamp, absolute_time))
 		return (release_first_fork(philo));
 	//Code for one philosopher
 	if (philo->first_fork->mtx_index == philo->second_fork->mtx_index)
@@ -126,7 +126,7 @@ int	philo_waiting(t_philosopher *philo)
 	timestamp = absolute_time - read_initial_time(philo->meal);
 	if (read_finished_meal(philo->meal))
 		return (release_forks(philo, 1));
-	if (!print_action(FORK_2, philo, timestamp, absolute_time))
+	if (!print_action(FORK, philo, timestamp, absolute_time))
 		return (release_forks(philo, 1));
 	return (0);
 }

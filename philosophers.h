@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 10:27:45 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/09 16:08:25 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/09 16:17:30 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@
 
 typedef enum e_philo_action
 {
-	FORK_1,
-	FORK_2,
+	FORK,
 	EATING,
 	SLEEPING,
 	THINKING,
