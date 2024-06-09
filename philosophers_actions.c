@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 13:24:53 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/09 16:55:41 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/09 17:50:17 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ int	philo_eating(t_philosopher *philo)
 {
 	long	timestamp;
 	long	absolute_time;
-	long	eating_elapsed_time;
 
 	absolute_time = get_absolute_milliseconds();
 	timestamp = absolute_time - read_initial_time(philo->meal);
@@ -49,14 +48,8 @@ int	philo_eating(t_philosopher *philo)
 		return (release_forks(philo, 1));
 	if (philo->meal->data->nbr_of_meals != -1)
 		philo->meals_eaten++;
-	eating_elapsed_time = get_relative_milliseconds(read_eating_time(philo));
-	while (eating_elapsed_time <= philo->meal->data->time_to_eat)
-	{
-		if (read_finished_meal(philo->meal))
-			return (release_forks(philo, 1));
-		eating_elapsed_time = get_relative_milliseconds
-			(read_eating_time(philo));
-	}
+	if (precise_usleep(philo->meal, philo->meal->data->time_to_eat * 1000))
+		return (1);
 	return (release_forks(philo, 0));
 }
 
@@ -64,19 +57,13 @@ int	philo_sleeping(t_philosopher *philo)
 {
 	long	timestamp;
 	long	absolute_time;
-	long	sleeping_elapsed_time;
 
 	absolute_time = get_absolute_milliseconds();
 	timestamp = absolute_time - read_initial_time(philo->meal);
 	if (!print_action(SLEEPING, philo, timestamp))
 		return (1);
-	sleeping_elapsed_time = get_relative_milliseconds(absolute_time);
-	while (sleeping_elapsed_time <= philo->meal->data->time_to_sleep)
-	{
-		if (read_finished_meal(philo->meal))
-			return (1);
-		sleeping_elapsed_time = get_relative_milliseconds(absolute_time);
-	}
+	if (precise_usleep(philo->meal, philo->meal->data->time_to_sleep * 1000))
+		return (1);
 	return (0);
 }
 
