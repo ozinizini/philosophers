@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 10:27:45 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/09 16:17:30 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/09 16:26:30 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,8 @@ void			precise_usleep(t_meal *meal, long timesleep);
 long long		ft_atol(char *str);
 void			check_valid_input(int argc, char **argv);
 t_meal			*set_up_meal(int argc, char **argv);
-long			print_action(t_philo_action action_type, t_philosopher *philo,
-					long timestamp, long absolute_time);
+int				print_action(t_philo_action action_type, t_philosopher *philo,
+					long timestamp);
 int				philo_eating(t_philosopher *philo);
 int				philo_sleeping(t_philosopher *philo);
 int				philo_thinking(t_philosopher *philo);
