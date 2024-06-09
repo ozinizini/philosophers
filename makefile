@@ -1,6 +1,6 @@
 
 CLANG = clang
-FLAGS = -Wall -Wextra -Werror -pthread #-fsanitize=address -fno-omit-frame-pointer #-fsanitize=thread -g
+FLAGS = -Wall -Wextra -Werror -pthread -g #-fsanitize=address -fno-omit-frame-pointer #-fsanitize=thread -g
 SRCS = end_meal.c\
 		monitor.c\
 		mutexes_1.c\
@@ -34,7 +34,7 @@ $(NAME): $(OBJS)
 	@echo "$(BOLD_GREEN)philosophers executable compiled and ready to be used!$(NC)"
 
 %.o: %.c
-	@$(CLANG) $(CFLAGS) $(INCLUDES) -c $< -o $@
+	@$(CLANG) $(FLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
 	@echo "Cleaning object files"
