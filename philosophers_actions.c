@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 13:24:53 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/10 15:30:03 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/10 15:36:47 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,8 @@ int	philo_eating(t_philosopher *philo)
 int	philo_sleeping(t_philosopher *philo)
 {
 	long	timestamp;
-	long	absolute_time;
 
-	absolute_time = get_absolute_milliseconds();
-	timestamp = absolute_time - read_initial_time(philo->meal);
+	timestamp = get_relative_milliseconds(read_initial_time(philo->meal));
 	if (!print_action(SLEEPING, philo, timestamp))
 		return (1);
 	if (precise_usleep(philo->meal, philo->meal->data->time_to_sleep * 1000))
@@ -69,10 +67,8 @@ int	philo_sleeping(t_philosopher *philo)
 int	philo_thinking(t_philosopher *philo)
 {
 	long	timestamp;
-	long	absolute_time;
 
-	absolute_time = get_absolute_milliseconds();
-	timestamp = absolute_time - read_initial_time(philo->meal);
+	timestamp = get_relative_milliseconds(read_initial_time(philo->meal));
 	if (!print_action(THINKING, philo, timestamp))
 		return (1);
 	else
@@ -82,11 +78,9 @@ int	philo_thinking(t_philosopher *philo)
 int	philo_waiting(t_philosopher *philo)
 {
 	long	timestamp;
-	long	absolute_time;
 
 	pthread_mutex_lock(&philo->first_fork->mtx);
-	absolute_time = get_absolute_milliseconds();
-	timestamp = absolute_time - read_initial_time(philo->meal);
+	timestamp = get_relative_milliseconds(read_initial_time(philo->meal));
 	if (read_finished_meal(philo->meal)
 		|| (!print_action(FORK, philo, timestamp)))
 		return (release_first_fork(philo));
@@ -97,8 +91,7 @@ int	philo_waiting(t_philosopher *philo)
 		return (release_first_fork(philo));
 	}
 	pthread_mutex_lock(&philo->second_fork->mtx);
-	absolute_time = get_absolute_milliseconds();
-	timestamp = absolute_time - read_initial_time(philo->meal);
+	timestamp = get_relative_milliseconds(read_initial_time(philo->meal));
 	if (read_finished_meal(philo->meal)
 		|| (!print_action(FORK, philo, timestamp)))
 		return (release_forks(philo, 1));
