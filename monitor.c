@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 14:59:24 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/09 17:48:03 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/10 11:12:08 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void	*monitor_thread(void *arg)
 	t_meal	*meal;
 
 	meal = (t_meal *)arg;
-	//Realmente no necesito proteger el meal->initial_time
 	set_initial_time(meal);
 	set_start_meal(meal);
 	while (!read_finished_meal(meal))
@@ -69,6 +68,5 @@ void	*monitor_thread(void *arg)
 		if (full_counter == meal->data->philo_nbr)
 			set_finished_meal(meal);
 	}
-	printf("MOnitor LEFT\n");
 	return (NULL);
 }

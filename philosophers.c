@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 11:12:52 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/09 17:18:45 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/10 11:11:27 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	*philo_routine(void *arg)
 		if (philo_thinking(philo))
 			break ;
 	}
-	printf("philo %d LEFT\n", philo->philo_index);
 	return (NULL);
 }
 
