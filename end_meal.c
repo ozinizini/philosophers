@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 12:51:40 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/09 16:43:15 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/10 14:56:33 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static void	destroy_mutexes(t_meal *meal)
 	{
 		pthread_mutex_destroy(&meal->forks[i].mtx);
 		pthread_mutex_destroy(&meal->philosophers[i].eating_time_mutex);
+		pthread_mutex_destroy(&meal->philosophers[i].meals_eaten_mutex);
 		i++;
 	}
 	pthread_mutex_destroy(&meal->start_meal_mutex);

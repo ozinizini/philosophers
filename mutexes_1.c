@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 13:13:01 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/09 16:53:15 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/10 14:57:39 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,19 +46,4 @@ void	set_initial_time(t_meal *meal)
 	pthread_mutex_unlock(&meal->init_time_mutex);
 }
 
-long	read_eating_time(t_philosopher *philo)
-{
-	long	eating_timestamp;
 
-	pthread_mutex_lock(&philo->eating_time_mutex);
-	eating_timestamp = philo->eating_timestamp;
-	pthread_mutex_unlock(&philo->eating_time_mutex);
-	return (eating_timestamp);
-}
-
-void	set_eating_time(t_philosopher *philo, long absolute_time)
-{
-	pthread_mutex_lock(&philo->eating_time_mutex);
-	philo->eating_timestamp = absolute_time;
-	pthread_mutex_unlock(&philo->eating_time_mutex);
-}

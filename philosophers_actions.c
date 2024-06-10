@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 13:24:53 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/10 11:10:29 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/10 15:02:17 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	philo_eating(t_philosopher *philo)
 	if (!print_action(EATING, philo, timestamp))
 		return (release_forks(philo, 1));
 	if (philo->meal->data->nbr_of_meals != -1)
-		philo->meals_eaten++;
+		increase_meals_eaten(philo);
 	if (precise_usleep(philo->meal, philo->meal->data->time_to_eat * 1000))
 		return (release_forks(philo, 1));
 	return (release_forks(philo, 0));

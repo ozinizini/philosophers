@@ -5,6 +5,7 @@ SRCS = end_meal.c\
 		monitor.c\
 		mutexes_1.c\
 		mutexes_2.c\
+		mutexes_3.c\
 		philosophers_actions.c\
 		philosophers.c\
 		start_meal.c\

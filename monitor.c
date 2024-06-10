@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 14:59:24 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/10 14:14:06 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/10 15:03:18 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,11 @@
 static int	check_full(t_philosopher *philo)
 {
 	long	nbr_of_meals;
+	long	meals_eaten;
 
 	nbr_of_meals = philo->meal->data->nbr_of_meals;
-	if (nbr_of_meals != -1 && philo->meals_eaten >= nbr_of_meals)
+	meals_eaten = read_meals_eaten(philo);
+	if (nbr_of_meals != -1 && meals_eaten >= nbr_of_meals)
 		return (1);
 	else
 		return (0);
