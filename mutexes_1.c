@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 13:13:01 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/10 14:57:39 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/10 15:23:05 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,3 @@ void	set_initial_time(t_meal *meal)
 	meal->initial_time = get_absolute_milliseconds();
 	pthread_mutex_unlock(&meal->init_time_mutex);
 }
-
-

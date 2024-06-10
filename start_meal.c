@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 12:49:12 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/10 14:56:27 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/10 15:23:45 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ static void	init_mutexes(t_meal *meal)
 	err = 0;
 	while (i < meal->data->philo_nbr)
 	{
-		//No estoy controlando si se produce un error
-		//Devuelve 0 cuando todo ha ido bien.
 		if ((err = pthread_mutex_init(&meal->forks[i].mtx, NULL)))
 			printf("Mutex initialization failed, err: %d\n", err);
 		if ((err = pthread_mutex_init(&meal->philosophers[i].
@@ -50,7 +48,6 @@ static void	init_philo(t_meal *meal)
 	i = 0;
 	while (i < meal->data->philo_nbr)
 	{
-		//No estoy controlando el valor de retorno de pthread_create
 		pthread_create(&meal->philosophers[i].philo, NULL,
 			&philo_routine, &meal->philosophers[i]);
 		i++;

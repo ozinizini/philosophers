@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 13:24:53 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/10 15:02:17 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/10 15:30:03 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int	print_action(t_philo_action action_type, t_philosopher *philo,
 	long timestamp)
 {
-
 	pthread_mutex_lock(&philo->meal->print_mutex);
 	if (read_finished_meal(philo->meal) && action_type != DIED)
 	{
@@ -82,33 +81,26 @@ int	philo_thinking(t_philosopher *philo)
 
 int	philo_waiting(t_philosopher *philo)
 {
-	int		err;
 	long	timestamp;
 	long	absolute_time;
 
-	err = 0;
-	if ((err = pthread_mutex_lock(&philo->first_fork->mtx)))
-		printf("Locking error with errno: %d\n", err);
+	pthread_mutex_lock(&philo->first_fork->mtx);
 	absolute_time = get_absolute_milliseconds();
 	timestamp = absolute_time - read_initial_time(philo->meal);
-	if (read_finished_meal(philo->meal))
+	if (read_finished_meal(philo->meal)
+		|| (!print_action(FORK, philo, timestamp)))
 		return (release_first_fork(philo));
-	if (!print_action(FORK, philo, timestamp))
-		return (release_first_fork(philo));
-	//Code for one philosopher
 	if (philo->first_fork->mtx_index == philo->second_fork->mtx_index)
 	{
 		while (!read_finished_meal(philo->meal))
 			;
 		return (release_first_fork(philo));
 	}
-	if ((err = pthread_mutex_lock(&philo->second_fork->mtx)))
-		printf("Locking error with errno: %d\n", err);
+	pthread_mutex_lock(&philo->second_fork->mtx);
 	absolute_time = get_absolute_milliseconds();
 	timestamp = absolute_time - read_initial_time(philo->meal);
-	if (read_finished_meal(philo->meal))
-		return (release_forks(philo, 1));
-	if (!print_action(FORK, philo, timestamp))
+	if (read_finished_meal(philo->meal)
+		|| (!print_action(FORK, philo, timestamp)))
 		return (release_forks(philo, 1));
 	return (0);
 }
