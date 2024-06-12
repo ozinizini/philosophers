@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 12:49:12 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/10 15:43:22 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/12 18:30:28 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,6 @@ static void	init_monitor(t_meal *meal)
 void	begin_meal(t_meal *meal)
 {
 	init_mutexes(meal);
-	init_monitor(meal);
 	init_philo(meal);
+	init_monitor(meal);
 }
