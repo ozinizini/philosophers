@@ -11,7 +11,7 @@ SRCS = end_meal.c\
 		start_meal.c\
 		struct_handling_functions.c\
 		time_functions.c\
-		utils.c\
+		errors.c\
 		validation_functions.c
 OBJS = $(SRCS:.c=.o)
 NAME = philosophers
