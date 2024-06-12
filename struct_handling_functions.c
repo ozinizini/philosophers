@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 10:46:18 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/08 12:41:27 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/12 13:09:32 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static t_prompt_data	*init_prompt(int argc, char **argv)
 
 	prompt = malloc(sizeof(t_prompt_data));
 	if (prompt == NULL)
-		return (return_null_message("data"));
+		return (failed_allocation());
 	prompt->nbr_of_meals = -1;
 	prompt->philo_nbr = ft_atol(argv[1]);
 	prompt->time_to_die = ft_atol(argv[2]);
@@ -37,7 +37,7 @@ static t_philosopher	*initiliaze_philosophers(int philo_nbr, t_meal *meal)
 	i = 0;
 	philosophers = malloc(philo_nbr * sizeof(t_philosopher));
 	if (philosophers == NULL)
-		return (return_null_message("philosophers"));
+		return (failed_allocation());
 	while (i < philo_nbr)
 	{
 		philosophers[i].philo_index = i + 1;
@@ -64,7 +64,7 @@ static t_mtx	*initialize_mutexes(int philo_nbr)
 	i = 0;
 	mutexes = malloc(philo_nbr * sizeof(t_mtx));
 	if (mutexes == NULL)
-		return (return_null_message("forks"));
+		return (failed_allocation());
 	while (i < philo_nbr)
 	{
 		mutexes[i].mtx_index = i + 1;
@@ -79,7 +79,7 @@ t_meal	*set_up_meal(int argc, char **argv)
 
 	meal = malloc(sizeof(t_meal));
 	if (meal == NULL)
-		return (return_null_message("meal"));
+		return (failed_allocation());
 	meal->initial_time = 0;
 	meal->start_meal = 0;
 	meal->finished_meal = 0;
