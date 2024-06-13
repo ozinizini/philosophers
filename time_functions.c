@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 10:26:57 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/12 18:47:19 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/13 10:54:43 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ int	precise_usleep(t_meal *meal, long timesleep)
 			return (1);
 		elapsed = get_absolute_microseconds() - begin_sleeping;
 		rem = timesleep - elapsed;
-		if (rem > 10000)
-			usleep(rem/2);
+		if (rem > 1000)
+			usleep(500);
 		else
 		{
 			while (get_absolute_microseconds() - begin_sleeping < timesleep)

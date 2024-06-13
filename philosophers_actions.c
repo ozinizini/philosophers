@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 13:24:53 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/12 18:44:56 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/13 11:45:23 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,12 @@ int	philo_thinking(t_philosopher *philo)
 	{
  		if (philo->meal->data->philo_nbr % 2 == 0)
 			return (0);
+/* 		if (philo->philo_index == 93)
+			printf("I'm here\n"); */
 		time_to_think = philo->meal->data->time_to_eat * 2 - philo->meal->data->time_to_sleep;  
 		if (time_to_think < 0)
 			time_to_think = 0;
-		return (precise_usleep(philo->meal, time_to_think * 0.42));
+		return (precise_usleep(philo->meal, time_to_think * 1000 * 0.42));
 		//return(precise_usleep(philo->meal, (((philo->meal->data->philo_nbr % 2) * philo->meal->data->time_to_eat) * 2) - philo->meal->data->time_to_sleep * 0.40));
 	}
 }
