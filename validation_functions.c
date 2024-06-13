@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 10:41:47 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/13 08:59:12 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/13 15:01:24 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,11 @@ long long	ft_atol(char *str)
 	{
 		number = number * 10 + (*str - '0');
 		str++;
+	}
+	if (*str != '\0')
+	{
+		printf(RED "You must enter numbers only!\n" RST);
+		return (-1);
 	}
 	if (number > INT_MAX)
 	{
