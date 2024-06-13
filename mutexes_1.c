@@ -6,27 +6,27 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 13:13:01 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/10 15:23:05 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/13 13:34:45 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-int	read_start_meal(t_meal *meal)
+int	read_philos_ready(t_meal *meal)
 {
-	int	start_meal;
+	int	philos_ready;
 
-	pthread_mutex_lock(&meal->start_meal_mutex);
-	start_meal = meal->start_meal;
-	pthread_mutex_unlock(&meal->start_meal_mutex);
-	return (start_meal);
+	pthread_mutex_lock(&meal->philos_ready_mutex);
+	philos_ready = meal->philos_ready;
+	pthread_mutex_unlock(&meal->philos_ready_mutex);
+	return (philos_ready);
 }
 
-void	set_start_meal(t_meal *meal)
+void	set_philos_ready(t_meal *meal)
 {
-	pthread_mutex_lock(&meal->start_meal_mutex);
-	meal->start_meal = 1;
-	pthread_mutex_unlock(&meal->start_meal_mutex);
+	pthread_mutex_lock(&meal->philos_ready_mutex);
+	meal->philos_ready = 1;
+	pthread_mutex_unlock(&meal->philos_ready_mutex);
 }
 
 long	read_initial_time(t_meal *meal)

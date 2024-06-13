@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 10:27:45 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/13 09:48:22 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/13 14:37:33 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,6 @@ void			*failed_allocation(void);
 int				return_error_message(char *message);
 int				read_philos_ready(t_meal *meal);
 void			set_philos_ready(t_meal *meal);
-int				read_start_meal(t_meal *meal);
-void			set_start_meal(t_meal *meal);
 long			read_initial_time(t_meal *meal);
 void			set_initial_time(t_meal *meal);
 int				read_finished_meal(t_meal *meal);
@@ -105,8 +103,7 @@ int				precise_usleep(t_meal *meal, long timesleep);
 long long		ft_atol(char *str);
 int				check_invalid_input(int argc, char **argv);
 t_meal			*set_up_meal(int argc, char **argv);
-int				print_action(t_philo_action action_type, t_philosopher *philo,
-					long timestamp);
+int				print_action(t_philo_action action_type, t_philosopher *philo);
 int				philo_eating(t_philosopher *philo);
 int				philo_sleeping(t_philosopher *philo);
 int				philo_thinking(t_philosopher *philo);
