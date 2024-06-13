@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 10:41:47 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/12 12:55:14 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/13 08:59:12 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,23 +49,16 @@ long long	ft_atol(char *str)
 int	check_invalid_input(int argc, char **argv)
 {
 	int	i;
-	int	error;
 
 	i = 1;
-	error = 0;
 	while (i < argc)
 	{
 		if (ft_atol(argv[i++]) == -1)
-		{
-			error = 1;
-			break ;
-		}
+			return (1);
 	}
 	if (argc == 6 && ft_atol(argv[5]) == 0)
-		error = return_error_message("Zero meals entered!\n");
+		return (return_error_message("Zero meals entered!\n"));
 	if (ft_atol(argv[1]) == 0)
-		error = return_error_message("Zero philosophers showed up!\n");
-	if (error)
-		return (1);
+		return (return_error_message("Zero philosophers showed up!\n"));
 	return (0);
 }
