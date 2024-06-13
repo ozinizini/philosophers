@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 12:49:12 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/12 18:30:28 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/13 09:48:45 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static void	init_mutexes(t_meal *meal)
 		pthread_mutex_init(&meal->philosophers[i].meals_eaten_mutex, NULL);
 		i++;
 	}
+	pthread_mutex_init(&meal->philos_ready_mutex, NULL);
 	pthread_mutex_init(&meal->start_meal_mutex, NULL);
 	pthread_mutex_init(&meal->init_time_mutex, NULL);
 	pthread_mutex_init(&meal->print_mutex, NULL);
@@ -52,5 +53,6 @@ void	begin_meal(t_meal *meal)
 {
 	init_mutexes(meal);
 	init_philo(meal);
+	set_philos_ready(meal);
 	init_monitor(meal);
 }

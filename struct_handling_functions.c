@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 10:46:18 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/12 13:09:32 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/13 09:41:11 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ t_meal	*set_up_meal(int argc, char **argv)
 	meal->initial_time = 0;
 	meal->start_meal = 0;
 	meal->finished_meal = 0;
+	meal->philos_ready = 0;
 	meal->data = init_prompt(argc, argv);
 	if (meal->data == NULL)
 		return (free(meal), NULL);

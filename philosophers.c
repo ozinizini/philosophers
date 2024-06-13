@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 11:12:52 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/12 18:49:17 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/13 09:52:41 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@ void	*philo_routine(void *arg)
 	t_philosopher	*philo;
 
 	philo = (t_philosopher *)arg;
-	while (!read_start_meal(philo->meal))
+	while (!read_philos_ready(philo->meal))
+		;
+	while (!read_initial_time(philo->meal))
 		;
 	if (philo->meal->data->philo_nbr % 2 == 0 && philo->philo_index % 2 == 0)
 		precise_usleep(philo->meal, 30000);

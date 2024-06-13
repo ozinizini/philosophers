@@ -6,7 +6,7 @@
 /*   By: ozini <ozini@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 10:27:45 by ozini             #+#    #+#             */
-/*   Updated: 2024/06/12 13:07:42 by ozini            ###   ########.fr       */
+/*   Updated: 2024/06/13 09:48:22 by ozini            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,11 @@ typedef struct meal_s
 	t_philosopher	*philosophers;
 	t_mtx			*forks;
 	pthread_mutex_t	print_mutex;
+	pthread_mutex_t	philos_ready_mutex;
 	pthread_mutex_t	init_time_mutex;
 	pthread_mutex_t	start_meal_mutex;
 	pthread_mutex_t	fin_meal_mutex;
+	int				philos_ready;
 	long			initial_time;
 	int				start_meal;
 	int				finished_meal;
@@ -81,6 +83,8 @@ struct	s_philosopher
 void			*return_null_message(char *message);
 void			*failed_allocation(void);
 int				return_error_message(char *message);
+int				read_philos_ready(t_meal *meal);
+void			set_philos_ready(t_meal *meal);
 int				read_start_meal(t_meal *meal);
 void			set_start_meal(t_meal *meal);
 long			read_initial_time(t_meal *meal);
